@@ -1,0 +1,14 @@
+{
+  "name": "models",
+  "version": "1.0.0",
+  "description": "Mongodb models",
+  "main": "db-schemas.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Evren Kilic and Tim Beeren",
+  "license": "MIT",
+  "dependencies": {
+    "mongoose": "^5.10.9"
+  }
+}
