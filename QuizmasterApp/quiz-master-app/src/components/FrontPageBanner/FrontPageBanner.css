@@ -1,0 +1,5 @@
+.front-page-banner{
+    height: 50vh;
+    border-radius: 0px 0px 100px 100px;
+    background: linear-gradient(to bottom, #97D077 0%, #ffffff 140%);
+}
