@@ -1,0 +1,19 @@
+#waiting-clock
+{
+    height: 50vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+#title{
+    margin-bottom: 1em;
+}
+
+.spinner-size
+{
+    height: 5em;
+    width: 5em;
+    animation: spinner-grow 2.0s cubic-bezier(0, 1.71, 0.9, -0.39) infinite;
+}
