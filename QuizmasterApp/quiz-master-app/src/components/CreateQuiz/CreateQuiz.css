@@ -1,0 +1,27 @@
+.form-size{
+    border-radius: 10px;
+    height: 7vh;
+    font-size: large;
+}
+
+.button-color{
+    border: black;
+    background-color: #97D077;
+}
+
+.button-width{
+    width: 75%
+}
+
+.align-center{
+    height: 50vh;
+    align-items: center;
+}
+
+.link-color-white{
+    color: white;
+}
+
+.link-parent{
+    width: 100%;
+}
