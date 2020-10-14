@@ -16,15 +16,23 @@
 #### InitialState
 ```
 {
-    teamName: null,
-    roomId: null,
-    teamScore: 0,
-    teamAnswer: null,
-    question: null,
-    correctAnswer: null,
-    questionNumber: 0,
-    roundNumber: 0,
-    isStarted: false
+    signUpInfo: {
+        teamName: null,
+        roomId: null,
+        isStarted: false    
+    },
+    questionInfo: {
+        teamAnswer: null,
+        question: null,
+        correctAnswer: null,
+        questionNumber: 0
+    },
+    score: {
+        teamScore: 0,
+    }
+    roundNumber {
+        roundNumber: 0,
+    }
 }
 ```
 ---
@@ -44,20 +52,26 @@
 #### InitialState
 ```
 {
-    quizName: null,
-    roomId: null,
-    teamNames: [null],
-    categories: [null],
-    question: null,
-    questions: [null],
-    questionNumber: 0,
-    answers: [{
+    quizInfo: {
+        quizName: null,
+        roomId: null,
+        teamNames: [null],
+        categories: [null],
+        isStarted: false
+    },
+    question: {
+        question: null,
+        questions: [null],
+        correctAnswer: null,
+        questionNumber: 0
+    },
+    answers: {
+        teamAnswers: [{
         teamName: null, 
         value: null, 
         correctness: false
-    }],
-    correctAnswer: null,
-    isStarted: false
+        }]
+    }
 }
 ```
 ---

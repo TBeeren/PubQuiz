@@ -1,13 +1,17 @@
 import React, {useState}  from 'react'
+import {Link} from 'react-router-dom'
+import {useDispatch} from 'react-redux'
+
+import {signUpAction} from '../../actions/SignUpActions'
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './SignUpForm.css'
-import {Link} from 'react-router-dom'
 
 export default function SignUpForm(props)
 {
     const [teamName, setTeamName] = useState("");
     const [roomId, setRoomId] = useState("");
+    const dispatch = useDispatch();
 
     const teamNameChangeHandler = (event) =>
     {
@@ -21,7 +25,7 @@ export default function SignUpForm(props)
 
     const submitHandler = (event) =>
     {
-        //event.preventDefault();
+        dispatch(signUpAction(teamName, roomId));
         console.log(`Team: ${teamName} signing in to room: ${roomId}`);
     }
 
@@ -35,7 +39,7 @@ export default function SignUpForm(props)
                 <div className="form-group center-input">
                     <input type="roomId" value={roomId} onChange={roomIdChangeHandler} className="form-control input-width" placeholder="Room ID" />
                 </div>
-                <Link to="/waiting">
+                <Link to="/question">
                     <button type="submit" onClick={submitHandler} className="btn button-green button-shape">Join Quizz!</button>
                 </Link>
             </form>

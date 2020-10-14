@@ -1,0 +1,39 @@
+#question-answer-info
+{
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    flex-flow: column;
+}
+
+#circle-bg
+{
+    border-style: solid;
+    border-width: 4px;
+    height: 90vw;
+    width: 90%;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column;
+}
+
+.pending{
+    background-color: rgb(0, 38, 255, 0.3);
+    border-color: rgb(0, 38, 255);
+}
+
+.incorrect{
+    background-color: rgb(214, 90, 68, 0.3);
+    border-color: rgb(228, 66, 38);
+}
+
+.correct{
+    background-color: rgba(151, 208, 119, 0.3);
+    border-color: #97d077;
+}
+
+h3{
+    width: 89%;
+}
