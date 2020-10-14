@@ -1,0 +1,14 @@
+#question-submit-form
+{
+    margin-left: 5vw;
+    margin-right: 5vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column;
+}
+
+.input-width
+{
+    width: 80vw;
+}

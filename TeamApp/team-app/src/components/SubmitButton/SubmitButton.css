@@ -45,3 +45,16 @@
     line-height: 1.33;
     border-radius: 60px;
   }
+
+.tilt-submit-button
+{
+    transform: rotate(-90deg);
+}
+
+#submit-button-container
+{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    height: 15vh;
+}
