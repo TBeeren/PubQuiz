@@ -19,6 +19,7 @@
 ##### Request
 ```
 {
+    teamName: String,
     answer: String
 }
 ```
@@ -31,6 +32,7 @@
 ##### Request
 ```
 {
+    teamName: String,
     answer: String
 }
 ```
@@ -47,7 +49,8 @@ None
 - **404 Not Found**
 ```
 {
-    question: String
+    question: String,
+    questionNumber: Number
 }
 ```
 ---
