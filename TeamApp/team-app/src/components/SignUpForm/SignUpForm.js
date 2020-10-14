@@ -2,7 +2,7 @@ import React, {useState}  from 'react'
 import {Link} from 'react-router-dom'
 import {useDispatch} from 'react-redux'
 
-import {signUpAction} from '../../actions/TeamActions'
+import {signUpAction} from '../../actions/SignUpActions'
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './SignUpForm.css'

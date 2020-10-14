@@ -1,8 +1,14 @@
 import {combineReducers} from 'redux'
-import TeamReducer from './TeamReducer'
+import SignUpReducer from './SignUpReducer'
+import QuestionInfoReducer from './QuestionReducer'
+import ScoreReducer from './ScoreReducer'
+import RoundReducer from './RoundReducer'
 
 const rootReducer = combineReducers({
-    team: TeamReducer
+    signUpInfo: SignUpReducer,
+    questionInfo: QuestionInfoReducer,
+    score: ScoreReducer,
+    roundNumber: RoundReducer
 });
 
 export default rootReducer;
