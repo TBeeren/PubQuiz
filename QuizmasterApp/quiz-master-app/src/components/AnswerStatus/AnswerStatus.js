@@ -2,35 +2,38 @@
 import React from "react";
 
 // Components
-import TeamApproveIcon from "../TeamApproveIcon/TeamApproveIcon";
-import KickModal from "../KickModal/KickModal";
+import TeamAnswer from "../TeamAnswer/TeamAnswer";
+import QuestionModal from "../QuestionModal/QuestionModal";
 
 // Artifacts
 import "bootstrap/dist/css/bootstrap.min.css";
 
 // Css
-import "./TeamApproveList.css";
+import "./AnswerStatus.css";
 
-function TeamApproveList() {
+function AnswerStatus() {
   const [modalShow, setModalShow] = React.useState(false);
 
   return (
     <div>
-      <KickModal
+      <QuestionModal
         show={modalShow}
+        teamName="Team"
+        answer="elf"
+        correct="11"
         onHide={() => setModalShow(false)}
-        onKick={() => console.log("Kick User")}
+        onApprove={() => console.log("Antwoord is goed")}
       />
       <div className="div-content d-flex justify-content-center">
         <div className="row">
           <div onClick={() => setModalShow(true)}>
-            <TeamApproveIcon></TeamApproveIcon>
+            <TeamAnswer></TeamAnswer>
           </div>
           <div onClick={() => setModalShow(true)}>
-            <TeamApproveIcon></TeamApproveIcon>
+            <TeamAnswer></TeamAnswer>
           </div>
           <div onClick={() => setModalShow(true)}>
-            <TeamApproveIcon></TeamApproveIcon>
+            <TeamAnswer></TeamAnswer>
           </div>
         </div>
       </div>
@@ -38,4 +41,4 @@ function TeamApproveList() {
   );
 }
 
-export default TeamApproveList;
+export default AnswerStatus;

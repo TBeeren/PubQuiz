@@ -1,0 +1,16 @@
+.btn-category{
+    border: 2px solid rgba(46, 49, 49, 0.6);
+    background-color: rgba(189, 195, 199, 0.4);
+    border-radius: 15px;
+    width: 100%;
+    height: 7vh;
+}
+
+.selected{
+    border: 2px solid #97d077;
+    background-color: rgba(151, 208, 119, 0.3);
+}
+
+.category-text{
+    color: black;
+}
