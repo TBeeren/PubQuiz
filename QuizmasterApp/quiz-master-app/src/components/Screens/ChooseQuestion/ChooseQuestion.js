@@ -2,31 +2,35 @@
 import React from "react";
 
 // Components
-import TeamApproveList from "../../TeamApproveList/TeamApproveList";
 import QuizInformation from "../../QuizInformation/QuizInformation";
+import SelectionList from "../../SelectionList/SelectionList";
 import NavButtons from "../../NavButtons/NavButtons";
 
 // Artifacts
 import "bootstrap/dist/css/bootstrap.min.css";
 
 // Css
-import "./ApproveTeams.css";
+import "./ChooseQuestion.css";
 
-function ApproveTeams() {
+function ChooseQuestion() {
+  const questionNumber = 1;
+  const path = `/question/${questionNumber}`;
+  
   return (
     <div>
       <QuizInformation
         title="Quiz Name"
-        description="Code: 318135"
+        description="Select the next Question"
       ></QuizInformation>
-      <TeamApproveList></TeamApproveList>
+      <SelectionList
+        mode="question"></SelectionList>
       <NavButtons
-        title="Start Quiz?"
-        path="/select-categories"
+        title="Start Question?"
+        path={path}
         returnButton={true}
       ></NavButtons>
     </div>
   );
 }
 
-export default ApproveTeams;
+export default ChooseQuestion;
