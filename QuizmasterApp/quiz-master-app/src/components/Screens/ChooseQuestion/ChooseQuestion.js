@@ -6,7 +6,10 @@ import { useSelector, useDispatch } from "react-redux";
 import QuizInformation from "../../QuizInformation/QuizInformation";
 import SingleSelectionList from "../../SingleSelectionList/SingleSelectionList";
 import NavButtons from "../../NavButtons/NavButtons";
-import { fetchQuestions } from '../../../actions/QuestionActions';
+import {
+  fetchQuestions,
+  NextQuestionAction,
+} from "../../../actions/QuestionActions";
 
 // Artifacts
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -16,13 +19,17 @@ import "./ChooseQuestion.css";
 
 function ChooseQuestion() {
   const questionNumber = useSelector((state) => state.question.questionNumber);
-  const roomId = useSelector((state) => state.quizInfo.roomId)
+  const roomId = useSelector((state) => state.quizInfo.roomId);
   const path = `/question/${questionNumber}`;
 
   const dispatch = useDispatch();
 
+  function newQuestionCallback(id) {
+    dispatch(NextQuestionAction(id));
+  }
+
   useEffect(() => {
-      dispatch(fetchQuestions(roomId));
+    dispatch(fetchQuestions(roomId));
   });
 
   return (
@@ -31,7 +38,7 @@ function ChooseQuestion() {
         title="Choose Question"
         description="Select the next Question"
       ></QuizInformation>
-      <SingleSelectionList></SingleSelectionList>
+      <SingleSelectionList onSelect={newQuestionCallback}></SingleSelectionList>
       <NavButtons
         title="Start Question?"
         path={path}

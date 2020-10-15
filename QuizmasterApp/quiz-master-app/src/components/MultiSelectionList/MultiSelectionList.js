@@ -20,10 +20,8 @@ function MultiSelectionList(props) {
     for (var i = 0; i < nSelections; i++) {
       try {
         if (buttons[i]) {
-          console.log("Adding")
           document.getElementById(i).classList.add("selected");
         } else {
-          console.log("Removing")
           document.getElementById(i).classList.remove("selected");
         }
       } catch (e) {
@@ -38,6 +36,7 @@ function MultiSelectionList(props) {
     let tempArray = [];
     buttons.forEach((i)=> {
       tempArray.push(i);
+      
     })
     
     tempArray[i] = !tempArray[i];

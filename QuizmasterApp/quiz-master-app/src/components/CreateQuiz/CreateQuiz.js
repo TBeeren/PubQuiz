@@ -24,7 +24,6 @@ function CreateQuiz() {
     let roomId = ("" + Math.random()).substring(2, 8);
     setRoomId(roomId);
     dispatch(CreateQuizAction(quizName, roomId));
-    console.log(`Quiz: ${quizName} created with code: ${roomId}`);
   };
 
   return (

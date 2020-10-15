@@ -33,7 +33,12 @@ function SingleSelectionList(props) {
   function clickHandler(i) {
     let tempArray = [];
     for (var j = 0; j < nSelections; j++) {
-      i === j ? tempArray.push(true) : tempArray.push(false);
+      if (i === j) {
+        tempArray.push(true);
+        props.onSelect(questions[j].questionNumber);
+      } else {
+        tempArray.push(false);
+      }
     }
     setButtons(tempArray);
   }
@@ -47,7 +52,7 @@ function SingleSelectionList(props) {
               callback={clickHandler}
               key={i}
               propId={i}
-              value={item}
+              value={item.question}
             ></Selection>
           );
         }
