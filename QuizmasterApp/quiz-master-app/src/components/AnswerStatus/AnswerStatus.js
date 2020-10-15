@@ -1,9 +1,10 @@
 //React
 import React from "react";
+import { useSelector } from "react-redux";
 
 // Components
 import TeamAnswer from "../TeamAnswer/TeamAnswer";
-import QuestionModal from "../QuestionModal/QuestionModal";
+
 
 // Artifacts
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -12,29 +13,19 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./AnswerStatus.css";
 
 function AnswerStatus() {
-  const [modalShow, setModalShow] = React.useState(false);
+  const teams = useSelector((state) => state.answers.teamAnswers);
 
   return (
     <div>
-      <QuestionModal
-        show={modalShow}
-        teamName="Team"
-        answer="elf"
-        correct="11"
-        onHide={() => setModalShow(false)}
-        onApprove={() => console.log("Antwoord is goed")}
-      />
       <div className="div-content d-flex justify-content-center">
         <div className="row">
-          <div onClick={() => setModalShow(true)}>
-            <TeamAnswer></TeamAnswer>
-          </div>
-          <div onClick={() => setModalShow(true)}>
-            <TeamAnswer></TeamAnswer>
-          </div>
-          <div onClick={() => setModalShow(true)}>
-            <TeamAnswer></TeamAnswer>
-          </div>
+          {teams.map(function (item, i) {
+            if (item.value !== null) {
+              return (
+                <TeamAnswer key={i} name={item.teamName} answer={item.value} correct="13" correctness={item.correctness}></TeamAnswer>
+              );
+            }
+          })}
         </div>
       </div>
     </div>

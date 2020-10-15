@@ -1,9 +1,10 @@
 //React
-import React from "react";
+import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
 
 // Components
 import QuizInformation from "../../QuizInformation/QuizInformation";
-import SelectionList from "../../SelectionList/SelectionList";
+import SingleSelectionList from "../../SingleSelectionList/SingleSelectionList";
 import NavButtons from "../../NavButtons/NavButtons";
 
 // Artifacts
@@ -13,17 +14,16 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./ChooseQuestion.css";
 
 function ChooseQuestion() {
-  const questionNumber = 1;
+  const questionNumber = useSelector((state) => state.question.questionNumber);
   const path = `/question/${questionNumber}`;
   
   return (
     <div>
       <QuizInformation
-        title="Quiz Name"
+        title="Choose Question"
         description="Select the next Question"
       ></QuizInformation>
-      <SelectionList
-        mode="question"></SelectionList>
+      <SingleSelectionList></SingleSelectionList>
       <NavButtons
         title="Start Question?"
         path={path}

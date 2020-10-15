@@ -7,7 +7,6 @@ import CustomModal from "../CustomModal/CustomModal";
 
 // Artifacts
 import "bootstrap/dist/css/bootstrap.min.css";
-
 // Css
 import "./NavButtons.css";
 

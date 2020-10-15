@@ -1,5 +1,6 @@
 // React
 import React from "react";
+import { useSelector } from 'react-redux';
 
 // Components
 import NavButtons from "../../NavButtons/NavButtons";
@@ -11,8 +12,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./Question.css";
 
 function Question() {
-  const questionNumber = 1;
-  const question = "Hoeveel tenen heeft Donald Trump op zondagmorgen?";
+  const questionNumber = useSelector((state) => state.question.questionNumber);
+  const question = useSelector((state) => state.question.question);
 
   return (
     <div>

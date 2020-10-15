@@ -9,9 +9,9 @@ import CreateQuiz from "../../CreateQuiz/CreateQuiz";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./Create.css";
 
-function Create() {
+function Create(props) {
   return (
-    <div>
+    <div id="createScreen">
       <FrontPageBanner></FrontPageBanner>
       <CreateQuiz></CreateQuiz>
     </div>

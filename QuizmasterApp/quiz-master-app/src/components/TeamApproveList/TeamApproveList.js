@@ -1,5 +1,6 @@
 //React
 import React from "react";
+import { useSelector } from "react-redux";
 
 // Components
 import TeamApproveIcon from "../TeamApproveIcon/TeamApproveIcon";
@@ -13,6 +14,7 @@ import "./TeamApproveList.css";
 
 function TeamApproveList() {
   const [modalShow, setModalShow] = React.useState(false);
+  const teams = useSelector((state) => state.quizInfo.teamNames);
 
   return (
     <div>
@@ -23,15 +25,17 @@ function TeamApproveList() {
       />
       <div className="div-content d-flex justify-content-center">
         <div className="row">
-          <div onClick={() => setModalShow(true)}>
-            <TeamApproveIcon></TeamApproveIcon>
-          </div>
-          <div onClick={() => setModalShow(true)}>
-            <TeamApproveIcon></TeamApproveIcon>
-          </div>
-          <div onClick={() => setModalShow(true)}>
-            <TeamApproveIcon></TeamApproveIcon>
-          </div>
+          {teams.map(function (item, i) {
+            if (item !== null) {
+              return (
+                <TeamApproveIcon
+                  key={i}
+                  name={item}
+                  onClick={() => setModalShow(true)}
+                ></TeamApproveIcon>
+              );
+            }
+          })}
         </div>
       </div>
     </div>
