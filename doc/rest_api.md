@@ -24,6 +24,11 @@
 }
 ```
 ##### Response
+```
+{
+    answerId: Number
+}
+```
 - **201 Created**
 - **404 Not Found**
 ---
@@ -37,6 +42,11 @@
 }
 ```
 ##### Response
+```
+{
+    answerId: Number
+}
+```
 - **200 OK**
 ---
 ### Receive

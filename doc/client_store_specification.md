@@ -22,10 +22,13 @@
         isStarted: false    
     },
     questionInfo: {
-        teamAnswer: null,
         question: null,
+        questionId: 0,
+        questionNumber: 0,
+        teamAnswer: null,
+        answerId: 0,
         correctAnswer: null,
-        questionNumber: 0
+        isCorrect: null //"pending", "correct" or "incorrect"
     },
     score: {
         teamScore: 0,

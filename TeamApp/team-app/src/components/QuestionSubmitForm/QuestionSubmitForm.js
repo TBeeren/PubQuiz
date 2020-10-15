@@ -4,22 +4,23 @@ import {useSelector, useDispatch} from 'react-redux';
 
 import './QuestionSubmitForm.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {fetchNewQuestion} from '../../actions/QuestionActions';
+import {AnswerChangeAction, fetchNewQuestion} from '../../actions/QuestionActions';
 
 export default function QuestionSubmitForm(props)
 {
-    const [answer, setAnswer] = useState("");
     const question = useSelector(state => state.questionInfo.question);
 
-    //placeholder till the server van ping
+    const answer = useSelector(state => state.questionInfo.answer);
     const dispatch = useDispatch();
-
+    
+    //placeholder till the server van ping
     useEffect(() => {
         dispatch(fetchNewQuestion(100, 1));
     });
+    //end
 
     const answerChangeHandler = (event) => {
-        setAnswer(event.target.value);
+        dispatch(AnswerChangeAction(event.target.value));
     } 
 
     return(
