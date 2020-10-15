@@ -1,33 +1,41 @@
 //React
-import React from "react";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 
 // Components
+import QuizInformation from "../../QuizInformation/QuizInformation";
+import MultiSelectionList from "../../MultiSelectionList/MultiSelectionList";
+import NavButtons from "../../NavButtons/NavButtons";
+import { fetchCategories } from '../../../actions/AnswerActions';
 
 // Artifacts
 import "bootstrap/dist/css/bootstrap.min.css";
-import QuizInformation from "../../QuizInformation/QuizInformation";
-import SelectionList from "../../SelectionList/SelectionList";
-import NavButtons from "../../NavButtons/NavButtons";
 
 // Css
 import "./ChooseCategory.css";
 
 function ChooseCategory() {
-  const questionNumber = 1;
+  const questionNumber = useSelector((state) => state.question.questionNumber);
+  const roomId = useSelector((state) => state.quizInfo.roomId)
   const path = `/question/${questionNumber}`;
   
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+      dispatch(fetchCategories(roomId));
+  });
+
   return (
     <div>
       <QuizInformation
-        title="Quiz Name"
+        title="Choose Categories"
         description="Select three categories"
       ></QuizInformation>
-      <SelectionList
-        mode="category"></SelectionList>
+      <MultiSelectionList></MultiSelectionList>
       <NavButtons
         title="Start Questions?"
         path={path}
-        returnButton={true}
+        returnButton={false}
       ></NavButtons>
     </div>
   );

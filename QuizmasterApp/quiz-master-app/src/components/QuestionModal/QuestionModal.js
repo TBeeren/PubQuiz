@@ -31,7 +31,10 @@ function QuestionModal(props) {
           </div>
           <div className="col-md-6 col-lg-6 col-sm-6">
             <button
-              onClick={props.onApprove}
+              onClick={() => { 
+                props.onApprove()
+                props.onHide()
+              }}
               className="btn btn-approve"
             ></button>
           </div>

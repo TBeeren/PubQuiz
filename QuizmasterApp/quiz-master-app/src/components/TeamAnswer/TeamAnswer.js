@@ -1,19 +1,48 @@
 //React
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { ApproveAnswerAction } from "../../actions/AnswerActions"
+
+// Component
+import QuestionModal from "../QuestionModal/QuestionModal";
 
 // Artifacts
 import "bootstrap/dist/css/bootstrap.min.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
 
 // Css
 import "./TeamAnswer.css";
 
-function TeamAnswer() {
+function TeamAnswer(props) {
+  const [modalShow, setModalShow] = React.useState(false);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if(!props.correctness) {
+      document.getElementById(props.name).classList.add('btn-color-wrong');
+    } else {
+      document.getElementById(props.name).classList.remove('btn-color-wrong');
+    }
+  });
+
   return (
-      <button type="button" className="btn btn-color btn-circle btn-xl">
-        Team
+    <div>
+      <QuestionModal
+        show={modalShow}
+        teamName={props.name}
+        answer={props.answer}
+        correct={props.correct}
+        onHide={() => setModalShow(false)}
+        onApprove={() => dispatch(ApproveAnswerAction(props.name ,true))}
+      />
+      <button
+        id={props.name}
+        type="button"
+        className="btn btn-color btn-circle btn-xl btn-font"
+        onClick={() => setModalShow(true)}
+      >
+        {props.name}
       </button>
+    </div>
   );
 }
 

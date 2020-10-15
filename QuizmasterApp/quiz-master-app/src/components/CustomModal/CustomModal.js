@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 
 // Artifacts
 import "bootstrap/dist/css/bootstrap.min.css";
-
 // Css
 import "./CustomModal.css";
 

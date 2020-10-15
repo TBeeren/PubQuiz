@@ -9,14 +9,14 @@ import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
 // Css
 import "./TeamApproveIcon.css";
 
-function TeamApproveIcon() {
+function TeamApproveIcon(props) {
   return (
       <button type="button" className="btn btn-color btn-circle btn-xl">
         <FontAwesomeIcon
           icon={faTimesCircle}
           className="icon-placement"
         />
-        Team
+        {props.name}
       </button>
   );
 }

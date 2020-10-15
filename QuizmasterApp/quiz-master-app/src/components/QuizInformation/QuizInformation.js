@@ -3,7 +3,6 @@ import React from "react";
 
 // Artifacts
 import "bootstrap/dist/css/bootstrap.min.css";
-
 // Css
 import "./QuizInformation.css";
 

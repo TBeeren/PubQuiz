@@ -3,6 +3,16 @@
     background-color: rgba(151, 208, 119, 0.3);
   }
   
+  .btn-color-wrong {
+    border: 2px solid rgb(228, 66, 38)!important;
+    background-color: rgb(214, 90, 68, 0.3)!important;
+  }
+
+  .btn-font{
+    text-align: center;
+    font-size: 1.8vw!important;
+  }
+  
   .div-decorator {
     margin: 30px;
     border-radius: 20px;
