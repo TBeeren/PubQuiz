@@ -2,7 +2,7 @@ const initialState = {
     quizName: null,
     roomId: null,
     teamNames: [null],
-    categories: [null],
+    categories: ["Category 1", "Category 2"],
     isStarted: false
 }
 

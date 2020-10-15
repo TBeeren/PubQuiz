@@ -1,8 +1,8 @@
 const initialState = {
     question: null,
-    questions: [null],
+    questions: ["Question 1", "Question 2"],
     correctAnswer: null,
-    questionNumber: 1
+    questionNumber: 1 
 }
 
 export default function QuestionReducer(state = initialState, action){
@@ -15,6 +15,13 @@ export default function QuestionReducer(state = initialState, action){
                 questionNumber: action.payload.questionNumber
             }
         }
+        case "NEXT_QUESTION":
+            {
+                return{
+                    ...state,
+                    questionNumber: action.payload.questionNumber
+                }
+            }
         default:
             return state
     }

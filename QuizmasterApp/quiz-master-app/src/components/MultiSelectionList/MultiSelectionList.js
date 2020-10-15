@@ -13,15 +13,17 @@ import "./MultiSelectionList.css";
 
 function MultiSelectionList(props) {
   const nSelections = 5;
-  const questions = useSelector((state) => state.question.questions);
+  const categories = useSelector((state) => state.quizInfo.categories);
   const [buttons, setButtons] = useState([false, false, false, false, false]);
 
   useEffect(() => {
     for (var i = 0; i < nSelections; i++) {
       try {
         if (buttons[i]) {
+          console.log("Adding")
           document.getElementById(i).classList.add("selected");
         } else {
+          console.log("Removing")
           document.getElementById(i).classList.remove("selected");
         }
       } catch (e) {
@@ -34,15 +36,17 @@ function MultiSelectionList(props) {
 
   function clickHandler(i) {
     let tempArray = [];
-    for (var j = 0; j < nSelections; j++) {
-      i === j ? tempArray.push(true) : tempArray.push(false);
-    }
+    buttons.forEach((i)=> {
+      tempArray.push(i);
+    })
+    
+    tempArray[i] = !tempArray[i];
     setButtons(tempArray);
   }
 
   return (
     <div className="container mt-5">
-      {questions.map(function (item, i) {
+      {categories.map(function (item, i) {
         if (item !== null && i < nSelections) {
           return (
             <Selection

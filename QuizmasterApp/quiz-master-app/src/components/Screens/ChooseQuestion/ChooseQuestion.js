@@ -1,11 +1,12 @@
 //React
 import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 // Components
 import QuizInformation from "../../QuizInformation/QuizInformation";
 import SingleSelectionList from "../../SingleSelectionList/SingleSelectionList";
 import NavButtons from "../../NavButtons/NavButtons";
+import { fetchQuestions } from '../../../actions/QuestionActions';
 
 // Artifacts
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -15,8 +16,15 @@ import "./ChooseQuestion.css";
 
 function ChooseQuestion() {
   const questionNumber = useSelector((state) => state.question.questionNumber);
+  const roomId = useSelector((state) => state.quizInfo.roomId)
   const path = `/question/${questionNumber}`;
-  
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+      dispatch(fetchQuestions(roomId));
+  });
+
   return (
     <div>
       <QuizInformation
@@ -27,7 +35,7 @@ function ChooseQuestion() {
       <NavButtons
         title="Start Question?"
         path={path}
-        returnButton={true}
+        returnButton={false}
       ></NavButtons>
     </div>
   );
