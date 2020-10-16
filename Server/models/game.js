@@ -21,12 +21,12 @@ const gameSchema = new mongoose.Schema({
     }],
     questions: [{
         question: { 
-            type: mongoose.Schema.Types.ObjectId,
+            type: Number,
             ref: 'Question'
         },  
         answers: [{
-            teamId: {
-                type: ObjectID
+            teamName: {
+                type: String
             },
             text: {
                 type: String

@@ -1,6 +1,6 @@
 const initialState = { 
     question: null,
-    questionId: 0,
+    questionId: -1,
     questionNumber: 0,
     teamAnswer: null,
     answerId: 0,
@@ -20,6 +20,7 @@ export default function QuestionInfoReducer(state = initialState, action)
             }
         case "NEW_QUESTION":
             {
+                console.log("questionId: ", state.questionId);
                 return{
                     ...state,
                     question: action.payload.question,

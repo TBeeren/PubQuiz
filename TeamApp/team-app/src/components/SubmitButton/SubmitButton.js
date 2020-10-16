@@ -14,8 +14,8 @@ import { faPlay } from '@fortawesome/free-solid-svg-icons';
 import "./SubmitButton.css";
 
 function SubmitButton() {
-  const roomId = useSelector((state) => state.questionInfo.roomId);
-  const teamName = useSelector((state) => state.questionInfo.teamName);
+  const roomId = useSelector((state) => state.signUpInfo.roomId);
+  const teamName = useSelector((state) => state.signUpInfo.teamName);
   const questionId = useSelector((state) => state.questionInfo.questionId);
   const answer = useSelector((state) => state.questionInfo.teamAnswer);
   const dispatch = useDispatch();

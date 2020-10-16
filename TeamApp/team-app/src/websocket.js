@@ -20,8 +20,8 @@ export function openSocket(store, teamName, roomId) {
     switch (data.type) {
         case "NEXT_QUESTION":
             {
-                console.log("NEXT_QUESTION");
-                store.dispatch(fetchNewQuestion(store.getState().signUpInfo.roomId), data.questionId);
+                console.log("NEXT_QUESTION", data.questionId);
+                store.dispatch(fetchNewQuestion(store.getState().signUpInfo.roomId, data.questionId));
                 break;
             }
         case "VALIDATE_ANSWER":

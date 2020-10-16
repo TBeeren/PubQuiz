@@ -65,7 +65,7 @@ None
 ```
 ---
 #### Answer to question / correctness of answer
-**`GET`** `/api/v1/games/:roomID/questions/:questionID/answers/:answerID`
+**`GET`** `/api/v1/games/:roomID/questions/:questionID/answers/:teamName`
 ##### Request
 None
 ##### Response
