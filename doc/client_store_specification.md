@@ -70,9 +70,9 @@
     },
     answers: {
         teamAnswers: [{
-        teamName: null, 
-        value: null, 
-        correctness: false
+            teamName: null, 
+            value: null, 
+            correctness: false
         }]
     }
 }
