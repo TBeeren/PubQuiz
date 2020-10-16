@@ -22,6 +22,7 @@ function NewQuestionAction(question, id, number)
 
 export function fetchNewQuestion(roomId, questionId)
 {
+    console.log("questionId being fetched", questionId);    
     return async function(dispatch)
     {
         try
@@ -62,7 +63,7 @@ export function submitAnswer(roomId, teamName, questionId, answer, isResubmit = 
             console.log("stringified body", body, JSON.stringify(body));
             if(!isResubmit)
             {
-                response = await fetch(`${applicationHost}/api/v1/games/1/questions/${questionId}/answer`, {
+                response = await fetch(`${applicationHost}/api/v1/games/${roomId}/questions/${questionId}/answer`, {
                     method: "Post",
                     body: JSON.stringify(body),
                     headers: {

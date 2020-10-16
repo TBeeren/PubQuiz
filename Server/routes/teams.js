@@ -23,6 +23,7 @@ teamRouter.post("/api/v1/games/:roomID/teams", (req, res) => {
             }
         }
     },() => {})
+    res.status(201).send();
 });
 
 //Quizmaster approving a teams answer

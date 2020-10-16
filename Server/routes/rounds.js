@@ -10,23 +10,47 @@ const ws = require("../index");
 const roundRouter = express.Router();
 const mongoose = require("mongoose");
 
-require("../models/Question");
+require("../models/question");
 require("../models/game");
 const Question = mongoose.model("Question");
 const Game = mongoose.model("Game");
 
 //Quizmaster posting what will be the next question
-roundRouter.post("/api/v1/games/:roomID/round", (req, res) => {
+roundRouter.post("/api/v1/games/:roomID/round", async (req, res) => {
   console.log(
-    `Quizmaster of room ${req.params.roomID} selected question: ${req.body.question}`
+    `Quizmaster of room ${req.params.roomID} selected question: ${req.body.questionId}`
   );
-  console.log(ws.getWebSocketServer().clients);
-  ws.getWebSocketServer().clients.forEach((client) => {
-    if ((client.role = "TEAM")) {
-      client.send(JSON.stringify({ type: "NEXT_QUESTION" }));
-    }
-  });
-  res.json({ message: "Why hello there" });
+  const questionId = req.body.questionId;
+
+  let requestedQuestion = await Question.findOne({ _id: questionId });
+
+  await Game.updateOne(
+    {
+      roomId: req.params.roomID,
+    },
+    {
+      $addToSet: {
+        questions: {
+          question: requestedQuestion._id,
+        },
+      },
+    },
+    () => {}
+  );
+  ws.getWebSocketServer()
+    .clients.forEach((client) => {
+      if ((client.role = "TEAM")) {
+        client.send(
+          JSON.stringify({
+            type: "NEXT_QUESTION",
+            questionId: questionId,
+          })
+        );
+      }
+    })
+    .catch((e) => {
+      res.status(404).json("Query went wrong, please try again.");
+    });
 });
 
 // Quizmaster starts a new round
@@ -79,7 +103,8 @@ roundRouter.get("/api/v1/games/:roomID/:round/questions", async (req, res) => {
   await Game.find(
     { roomId: req.params.roomID },
     { rounds: { $elemMatch: { roundNumber: req.params.round } } }
-  ).limit(1)
+  )
+    .limit(1)
     .then((res) => {
       categoriesList = res[0].rounds[res[0].rounds.length - 1].categories;
       roundNumber = res[0].rounds[res[0].rounds.length - 1].roundNumber;
@@ -89,15 +114,19 @@ roundRouter.get("/api/v1/games/:roomID/:round/questions", async (req, res) => {
       res.status(404).json("Query went wrong, please try again.");
     });
 
-  await Question.find(
-    { $match: { $or: [ { category: categoriesList[0] }, { category: categoriesList[1] }, { category: categoriesList[2] }] }}
-  ).limit(nQuestionsToFetch)
+  await Question.find({
+    $match: {
+      $or: [
+        { category: categoriesList[0] },
+        { category: categoriesList[1] },
+        { category: categoriesList[2] },
+      ],
+    },
+  })
+    .limit(nQuestionsToFetch)
     .then((question) => {
       console.log(question);
       res.status(200).json(question);
-    })
-    .catch((e) => {
-      res.status(404).json("Query went wrong, please try again.");
     });
 });
 

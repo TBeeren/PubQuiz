@@ -16,6 +16,13 @@ export default function SignUpReducer(state = initialState, action)
                 }
                 return newState;
             }
+        case "NEW_QUESTION":
+            {
+                return({
+                    ...state,
+                    isStarted: true
+                })
+            }
         default:
             return state;
     }
