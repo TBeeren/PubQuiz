@@ -1,5 +1,6 @@
 const express = require('express');
 const questionRouter = express.Router();
+const{websocketServer} = require('../index');
 
 questionRouter.get("/test", (req, res) => {
     console.log(req);
@@ -8,7 +9,7 @@ questionRouter.get("/test", (req, res) => {
 
 //TeamApp submitting answer to question
 questionRouter.post("/api/v1/games/:roomId/questions/:questionId/answer", (req, res) => {
-    console.log(req.body);
+    console.log("TeamApp submitting answer to question", req.body);
 });
 
 //TeamApp resubmitting answer to a question

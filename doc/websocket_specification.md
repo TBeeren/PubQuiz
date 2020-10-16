@@ -5,7 +5,8 @@
   - Notify to fetch the next quiz question.
 ```
 {
-    type: "NEXT_QUESTION"
+    type: "NEXT_QUESTION",
+    questionId: Number
 }
 ```
 - VALIDATE_ANSWER

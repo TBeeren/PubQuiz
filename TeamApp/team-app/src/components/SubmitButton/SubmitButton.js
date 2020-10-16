@@ -1,6 +1,9 @@
 //React
 import React from  'react';
 import {Link} from 'react-router-dom';
+import {useSelector, useDispatch} from 'react-redux';
+
+import {submitAnswer} from '../../actions/QuestionActions'
 
 // Artifacts
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -11,11 +14,16 @@ import { faPlay } from '@fortawesome/free-solid-svg-icons';
 import "./SubmitButton.css";
 
 function SubmitButton() {
+  const roomId = useSelector((state) => state.questionInfo.roomId);
+  const teamName = useSelector((state) => state.questionInfo.teamName);
+  const questionId = useSelector((state) => state.questionInfo.questionId);
+  const answer = useSelector((state) => state.questionInfo.teamAnswer);
+  const dispatch = useDispatch();
 
-    const handleClick = () =>
-    {
-        console.log("TODO: get answer from redux store and send");
-    }
+  const handleClick = () =>
+  {
+    dispatch(submitAnswer(roomId, teamName, questionId, answer));
+  }
 
   return (
       <div id="submit-button-container">
