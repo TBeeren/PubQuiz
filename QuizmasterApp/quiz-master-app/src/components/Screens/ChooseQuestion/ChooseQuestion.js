@@ -20,6 +20,7 @@ import "./ChooseQuestion.css";
 function ChooseQuestion() {
   const questionNumber = useSelector((state) => state.question.questionNumber);
   const roomId = useSelector((state) => state.quizInfo.roomId);
+  const rounds = useSelector((state) => state.round.rounds);
   const path = `/question/${questionNumber}`;
 
   const dispatch = useDispatch();
@@ -28,8 +29,9 @@ function ChooseQuestion() {
     dispatch(NextQuestionAction(id));
   }
 
+  // TODO: Get rounds dynamically. Now it returns an error.
   useEffect(() => {
-    dispatch(fetchQuestions(roomId));
+    dispatch(fetchQuestions(roomId, 1));
   });
 
   return (
@@ -38,7 +40,7 @@ function ChooseQuestion() {
         title="Choose Question"
         description="Select the next Question"
       ></QuizInformation>
-      <SingleSelectionList onSelect={newQuestionCallback}></SingleSelectionList>
+      <SingleSelectionList onSelect={() => newQuestionCallback}></SingleSelectionList>
       <NavButtons
         title="Start Question?"
         path={path}

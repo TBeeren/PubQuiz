@@ -9,6 +9,16 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./CustomModal.css";
 
 function CustomModal(props) {
+
+  const submitHandler = () => {
+    props.onHide();
+    try{
+      props.callback();
+    } catch (e){
+      // Not handling
+    }
+  }
+
   return (
     <Modal
       {...props}
@@ -36,7 +46,7 @@ function CustomModal(props) {
               className="d-flex justify-content-center"
             >
               <button
-                onClick={props.onHide}
+                onClick={() => submitHandler()}
                 className="btn btn-approve"
               ></button>
             </Link>

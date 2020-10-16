@@ -1,5 +1,5 @@
 // React
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 
 // Components
@@ -14,12 +14,11 @@ import "./MultiSelectionList.css";
 function MultiSelectionList(props) {
   const nSelections = 5;
   const categories = useSelector((state) => state.quizInfo.categories);
-  const [buttons, setButtons] = useState([false, false, false, false, false]);
 
   useEffect(() => {
     for (var i = 0; i < nSelections; i++) {
       try {
-        if (buttons[i]) {
+        if (props.buttons[i]) {
           document.getElementById(i).classList.add("selected");
         } else {
           document.getElementById(i).classList.remove("selected");
@@ -34,13 +33,11 @@ function MultiSelectionList(props) {
 
   function clickHandler(i) {
     let tempArray = [];
-    buttons.forEach((i)=> {
+    props.buttons.forEach((i)=> {
       tempArray.push(i);
-      
     })
-    
     tempArray[i] = !tempArray[i];
-    setButtons(tempArray);
+    props.onSetButtons(tempArray);
   }
 
   return (

@@ -11,6 +11,9 @@ const gameSchema = new mongoose.Schema({
     name: {
         type: String
     },
+    isStarted: {
+        type: Boolean
+    },
     rounds: [{
         roundNumber: {
             type: Number

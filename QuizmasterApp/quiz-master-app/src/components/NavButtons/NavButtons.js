@@ -12,7 +12,9 @@ import "./NavButtons.css";
 
 function NavButtons(props) {
   const [modalShow, setModalShow] = React.useState(false);
+
   let buttonsHtml;
+  let modalHtml;
 
   if (props.returnButton === true) {
     buttonsHtml = (
@@ -20,27 +22,49 @@ function NavButtons(props) {
         <div className="float-left align-bottom-left">
           <NavButton></NavButton>
         </div>
-        <div className="float-right align-bottom-right" onClick={() => setModalShow(true)}>
+        <div
+          className="float-right align-bottom-right"
+          onClick={() => setModalShow(true)}
+        >
           <NavButton></NavButton>
         </div>
       </div>
     );
   } else {
     buttonsHtml = (
-      <div className="float-right align-bottom-right" onClick={() => setModalShow(true)}>
+      <div
+        className="float-right align-bottom-right"
+        onClick={() => setModalShow(true)}
+      >
         <NavButton></NavButton>
       </div>
     );
   }
 
-  return (
-    <div className="div-content ">
+  if (props.callback !== undefined) {
+    modalHtml = (
+      <CustomModal
+        title={props.title}
+        path={props.path}
+        show={modalShow}
+        onHide={() => setModalShow(false)}
+        callback={() => props.callback()}
+      />
+    );
+  } else {
+    modalHtml = (
       <CustomModal
         title={props.title}
         path={props.path}
         show={modalShow}
         onHide={() => setModalShow(false)}
       />
+    );
+  }
+
+  return (
+    <div className="div-content ">
+      {modalHtml}
       {buttonsHtml}
     </div>
   );

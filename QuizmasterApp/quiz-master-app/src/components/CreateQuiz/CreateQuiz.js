@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
-import { CreateQuizAction } from "../../actions/QuizActions";
+import { createQuiz } from "../../actions/QuizActions";
 
 // Components
 
@@ -21,9 +21,7 @@ function CreateQuiz() {
   };
 
   const submitHandler = (e) => {
-    let roomId = ("" + Math.random()).substring(2, 8);
-    setRoomId(roomId);
-    dispatch(CreateQuizAction(quizName, roomId));
+    dispatch(createQuiz(quizName));
   };
 
   return (

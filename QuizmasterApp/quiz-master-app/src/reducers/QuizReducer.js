@@ -3,7 +3,7 @@ const initialState = {
     roomId: null,
     teamNames: [null],
     categories: ["Category 1", "Category 2"],
-    isStarted: false
+    isStarted: false,
 }
 
 export default function QuizReducer(state = initialState, action){
@@ -37,7 +37,14 @@ export default function QuizReducer(state = initialState, action){
                 isStarted: action.payload.isStarted
             }
         } 
+        case "NEW_CATEGORIES":
+            {
+                return {
+                    ...state,
+                    categories: action.payload.categories
+                }
+            }
         default:
-        return state;
+            return state;
     }
 }

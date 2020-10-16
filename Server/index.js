@@ -14,6 +14,7 @@ const webSocketServer   = new ws.Server({
 
 const dbName = 'quizzer';
 
+const gameRouter = require('./routes/game');
 const questionsRouter = require('./routes/questions');
 const teamRouter = require('./routes/teams'); 
 const routeRouter = require('./routes/rounds'); 
@@ -21,9 +22,11 @@ const routeRouter = require('./routes/rounds');
 app.use(cors());
 app.use(bodyParser.json());
 
+app.use('/', gameRouter)
 app.use('/', questionsRouter);
 app.use('/', teamRouter);
 app.use('/', routeRouter);
+
 
 webSocketServer.on('connection', (websocket) => {
     console.log("Websocket connection created");

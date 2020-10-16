@@ -1,4 +1,4 @@
-export function RoundReducer(round)
+export function NextRoundAction(round)
 {
     return {
         type: "UPDATE_ROUND",

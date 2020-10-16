@@ -19,8 +19,8 @@ function App() {
       <Switch>
         <Route exact path="/approve-teams" component={ApproveTeams}/>
         <Route exact path="/select-categories" component={ChooseCategory}/>
+        <Route exact path="/select-question" component={ChooseQuestion}/>
         <Route exact path="/question/:questionNumber" component={Question}/>
-        <Route exact path="/choose-question" component={ChooseQuestion}/>
         <Route path="/" component={Create}/>
       </Switch>
     </Router>
