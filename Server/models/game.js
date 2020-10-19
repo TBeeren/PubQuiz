@@ -23,6 +23,9 @@ const gameSchema = new mongoose.Schema({
         }
     }],
     questions: [{
+        _id: {
+            type: ObjectID
+        },
         question: { 
             type: Number,
             ref: 'Question'

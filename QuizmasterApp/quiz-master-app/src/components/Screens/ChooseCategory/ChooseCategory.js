@@ -35,7 +35,6 @@ function ChooseCategory() {
         tempArray.push(categories[i]);
       }
     });
-    console.log("Current Round: ", roundNumber + 1 );
     dispatch(newRound(roomId, roundNumber + 1, tempArray));
   };
 

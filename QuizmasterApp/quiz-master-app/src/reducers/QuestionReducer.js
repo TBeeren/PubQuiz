@@ -28,6 +28,13 @@ export default function QuestionReducer(state = initialState, action) {
         questionNumber: action.payload.questionNumber,
       };
     }
+    case "ADD_QUESTION": {
+      return {
+        ...state,
+        question: action.payload.question,
+        questionNumber: action.payload.questionNumber,
+      }
+    }
     default:
       return state;
   }

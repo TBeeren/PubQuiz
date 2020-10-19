@@ -24,7 +24,7 @@ function Question() {
       <AnswerStatus></AnswerStatus>
       <NavButtons
         title="Next Question?"
-        path="/choose-question"
+        path="/select-question"
         returnButton={false}
       ></NavButtons>
     </div>

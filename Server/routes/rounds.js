@@ -100,6 +100,7 @@ roundRouter.get("/api/v1/games/:roomID/:round/questions", async (req, res) => {
   let categoriesList = [];
   let roundNumber;
 
+  // Find round of team by roomID
   await Game.find(
     { roomId: req.params.roomID },
     { rounds: { $elemMatch: { roundNumber: req.params.round } } }
@@ -114,16 +115,32 @@ roundRouter.get("/api/v1/games/:roomID/:round/questions", async (req, res) => {
       res.status(404).json("Query went wrong, please try again.");
     });
 
-  await Question.find({
-    $match: {
-      $or: [
-        { category: categoriesList[0] },
-        { category: categoriesList[1] },
-        { category: categoriesList[2] },
-      ],
+  // Find questions that have been answered
+  let answeredQuestions = [];
+  await Game.find({ roomId: req.params.roomID }, { questions: 1 })
+    .then((res) => {
+      answeredQuestions = res.map((item, i) => {
+        return item.question;
+      });
+    }).catch((e) => {
+      console.log(e.message);
+      res.status(404).json("Query went wrong, please try again.");
+    });
+
+  // Find 5 questions based on the categories
+  Question.aggregate([
+    { $sample: { size: 200 } },
+    {
+      $match: {
+        $or: [
+          { category: categoriesList[0] },
+          { category: categoriesList[1] },
+          { category: categoriesList[2] },
+        ],
+        _id: { $nin: answeredQuestions }
+      }
     },
-  })
-    .limit(nQuestionsToFetch)
+  ]).limit(5)
     .then((question) => {
       console.log(question);
       res.status(200).json(question);
