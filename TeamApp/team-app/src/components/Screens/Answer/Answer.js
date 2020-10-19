@@ -1,5 +1,5 @@
-import React from 'react'
-import Score from '../../Score/Score'
+import React from 'react';
+import Score from '../../Score/Score';
 import ResubmitButton from '../../ResubmitButton/ResubmitButton'
 import QuestionAnswerInfo from '../../QuestionAnswerInfo/QuestionAnswerInfo';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -11,7 +11,7 @@ export default function Answer(props)
         <div id="answer">
                 <Score />
                 <QuestionAnswerInfo />
-                <ResubmitButton history={props.history}/>
+                <ResubmitButton history={props.history} />
         </div>
     );
 }   

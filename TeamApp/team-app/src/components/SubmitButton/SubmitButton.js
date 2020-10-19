@@ -18,11 +18,12 @@ function SubmitButton() {
   const teamName = useSelector((state) => state.signUpInfo.teamName);
   const questionId = useSelector((state) => state.questionInfo.questionId);
   const answer = useSelector((state) => state.questionInfo.teamAnswer);
+  const isResubmit = useSelector((state) => state.questionInfo.isResubmit);
   const dispatch = useDispatch();
 
   const handleClick = () =>
   {
-    dispatch(submitAnswer(roomId, teamName, questionId, answer));
+    dispatch(submitAnswer(roomId, teamName, questionId, answer, isResubmit));
   }
 
   return (

@@ -1,5 +1,8 @@
 //React
 import React from  'react';
+import {useDispatch, useSelector} from 'react-redux';
+
+import {isResubmitAction} from './../../actions/QuestionActions'
 
 // Artifacts
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -11,14 +14,17 @@ import "./ResubmitButton.css";
 
 function ResubmitButton(props) 
 {
+    const answerStatus = useSelector((state) => state.questionInfo.isCorrect);
+    const dispatch = useDispatch();
+
     const handleClick = () =>
     {
-        console.log("TODO: go back to submit answer screen");
+        dispatch(isResubmitAction(true));
         props.history.goBack();
     }
 
   return (
-      <div id="resubmit-button-container" className="show">
+      <div id="resubmit-button-container" className={answerStatus === "pending" ? "show" : "hidden"}>
         <button type="button" onClick={handleClick} className="btn btn-color-navbar btn-circle-navbutton btn-xl tilt-button">
             <FontAwesomeIcon
             icon={faPlay}

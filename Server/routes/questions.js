@@ -33,12 +33,12 @@ questionRouter.post("/api/v1/games/:roomId/questions/:questionId/answer", async 
           new: true
         }
       );
-    res.status(201).send();
+    res.status(201).json({});
 });
 
 //TeamApp resubmitting answer to a question
 questionRouter.put("/api/v1/games/:roomId/questions/:questionId/answer", (req, res) => {
-    console.log(req.body);
+    console.log("team updating an answer", req.body);
 });
 
 //TeamApp requesting the next question
@@ -66,13 +66,27 @@ questionRouter.get("/api/v1/games/:roomId/questions/:questionId/answers/:teamNam
     {
         questions: 1
     });
-    gameQAs.forEach((element)=>{
-        console.log(element);
 
+    let teamEntry;
+    gameQAs.questions.forEach((element)=>{
+        if(element.question === parseInt(req.params.questionId))
+        {
+            teamEntry = element.answers;
+        }
     })
+
+    let finalAnswer
+    for(let i = teamEntry.length - 1; i >= 0; i--)
+    {
+        if(teamEntry[i].teamName === req.params.teamName)
+        {
+            finalAnswer = teamEntry[i];
+        }
+    }
+    
     res.status(200).json({
         answer: correctAnswer.answer,
-        isCorrect: true
+        isCorrect: finalAnswer.isCorrect
     });
 });
 

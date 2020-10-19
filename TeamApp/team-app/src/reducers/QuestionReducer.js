@@ -2,10 +2,11 @@ const initialState = {
     question: null,
     questionId: -1,
     questionNumber: 0,
-    teamAnswer: null,
+    teamAnswer: "",
     answerId: 0,
     correctAnswer: null,
-    isCorrect: null
+    isCorrect: null,
+    isResubmit: false
 }
 
 export default function QuestionInfoReducer(state = initialState, action)
@@ -25,11 +26,13 @@ export default function QuestionInfoReducer(state = initialState, action)
                     ...state,
                     question: action.payload.question,
                     questionId: action.payload.questionId,
-                    questionNumber: action.payload.questionNumber
+                    questionNumber: action.payload.questionNumber,
+                    isResubmit: false
                 }
             }
         case "ANSWER_SUBMITTED":
             {
+                console.log("Answer submitteded Action redcuers");
                 return{
                     ...state,
                     teamAnswer: action.payload.answer,
@@ -44,6 +47,13 @@ export default function QuestionInfoReducer(state = initialState, action)
                     ...state,
                     correctAnswer: action.payload.answer,
                     isCorrect: correctness
+                }
+            }
+        case "SET_RESUBMIT":
+            {
+                return{
+                    ...state,
+                    isResubmit: action.payload
                 }
             }
         default:

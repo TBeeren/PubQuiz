@@ -4,7 +4,7 @@ const websocketAddress = "ws://localhost:3001/websocket"
 let ws;
 let store;
 
-export function openSocket(store, teamName, roomId) {
+export function openSocket(store, history ,teamName, roomId) {
   store = store;
   ws = new WebSocket(websocketAddress);
 
@@ -22,13 +22,14 @@ export function openSocket(store, teamName, roomId) {
             {
                 console.log("NEXT_QUESTION", data.questionId);
                 store.dispatch(fetchNewQuestion(store.getState().signUpInfo.roomId, data.questionId));
+                history.push("/question");
                 break;
             }
         case "VALIDATE_ANSWER":
             {
                 store.dispatch(validateAnswer(store.getState().signUpInfo.roomId, 
                                                 store.getState().questionInfo.questionId, 
-                                                store.getState().questionInfo.answerId));
+                                                store.getState().signUpInfo.teamName));
                 break;
             }
         default:

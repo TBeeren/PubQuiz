@@ -1,16 +1,31 @@
 const initialState = { 
-    teamScore: 0
+    teamScore: 0,
+    roundScore: 0
 }
 
 export default function ScoreReducer(state = initialState, action)
 {
     switch (action.type) {
-        case "UPDATE_SCORE":
+        case "INCREMENT_ROUNDSCORE":
             {
-                return{
+                return({
                     ...state,
-                    teamScore: action.payload
-                }
+                    roundScore: (state.roundScore + action.payload)
+                })
+            }
+        case "RESET_ROUND":
+            {
+                return({
+                    ...state,
+                    roundScore: 0
+                })
+            }
+        case "INCREMENT_SCORE":
+            {
+                return({
+                    ...state,
+                    teamScore: (state.teamScore + action.payload)
+                })
             }
         default:
             return state;

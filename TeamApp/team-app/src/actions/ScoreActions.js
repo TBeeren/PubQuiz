@@ -1,7 +1,22 @@
-export function updateScoreAction(score)
+export function incrementRoundScoreAction(value)
 {
     return {
-        type: "UPDATE_SCORE",
-        payload: score
+        type: "INCREMENT_ROUNDSCORE",
+        payload: value
+    }
+}
+
+export function resetRoundAction()
+{
+    return {
+        type: "RESET_ROUND"
+    }
+}  
+
+export function incrementScoreAction(value)
+{
+    return {
+        type: "INCREMENT_SCORE",
+        payload: value
     }
 }  

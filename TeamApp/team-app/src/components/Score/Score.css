@@ -1,8 +1,9 @@
 .score-container
 {
     display: flex;
-    align-items: center;
-    justify-content: flex-end;
+    align-items: flex-end;
+    justify-content: center;
+    flex-direction: column;
     height: 10vh;
 }
 

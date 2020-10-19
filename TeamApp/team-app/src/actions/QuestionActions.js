@@ -1,3 +1,5 @@
+import {incrementRoundScoreAction} from './ScoreActions'
+
 const applicationHost = "http://localhost:3001";
 
 export function AnswerChangeAction(answer)
@@ -75,7 +77,7 @@ export function submitAnswer(roomId, teamName, questionId, answer, isResubmit = 
             {
                 response = await fetch(`${applicationHost}/api/v1/games/${roomId}/questions/${questionId}/answer`, {
                     method: "Put",
-                    body: body,
+                    body: JSON.stringify(body),
                     headers: {
                         "Content-Type": "application/json"
                     }
@@ -102,19 +104,31 @@ function AnswerReceivedAction(answer, isCorrect)
     }
 }
 
-export function validateAnswer(roomId, questionId, answerId)
+export function validateAnswer(roomId, questionId, teamName)
 {
     return async function(dispatch)
     {
         try
         {
-            let response = await fetch(`${applicationHost}/api/v1/games/${roomId}/questions/${questionId}/answers/${answerId}`);
+            let response = await fetch(`${applicationHost}/api/v1/games/${roomId}/questions/${questionId}/answers/${teamName}`);
             response = await response.json();
             dispatch(AnswerReceivedAction(response.answer, response.isCorrect));
+            if(response.isCorrect)
+            {
+                dispatch(incrementRoundScoreAction(1));
+            }
         }
         catch(error)
         {
             console.log(error);
         }
     }
+}
+
+export function isResubmitAction(isResubmit)
+{
+    return({
+        type: "SET_RESUBMIT",
+        payload: isResubmit
+    })
 }

@@ -8,7 +8,7 @@ export default function SignUp(props)
     return(
         <div id="signUpScreen">
             <FrontPageBanner />
-            <SignUpForm />
+            <SignUpForm history={props.history}/>
         </div>
     )
 }

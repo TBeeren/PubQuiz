@@ -28,7 +28,7 @@ export default function SignUpForm(props)
     const submitHandler = (event) =>
     {
         dispatch(signUp(teamName, roomId));
-        openSocket(store, teamName, roomId);
+        openSocket(store, props.history, teamName, roomId);
         console.log(`Team: ${teamName} signing in to room: ${roomId}`);
     }
 

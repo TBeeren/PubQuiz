@@ -20,37 +20,53 @@ roundRouter.post("/api/v1/games/:roomID/round", async (req, res) => {
   console.log(
     `Quizmaster of room ${req.params.roomID} selected question: ${req.body.questionId}`
   );
-  const questionId = req.body.questionId;
-
-  let requestedQuestion = await Question.findOne({ _id: questionId });
-
-  await Game.updateOne(
+  try{
+    if(req.body.roundProgression){
+      ws.getWebSocketServer().clients.forEach((client) => {
+        if ((client.role = "TEAM")) {
+          client.send(
+            JSON.stringify({
+              type: "VALIDATE_ANSWER"
+            })
+          );
+        }
+      });
+      res.status(200).send();
+    }
+    else
     {
-      roomId: req.params.roomID,
-    },
-    {
-      $addToSet: {
-        questions: {
-          question: requestedQuestion._id,
+      const questionId = req.body.questionId;
+      let requestedQuestion = await Question.findOne({ _id: questionId });
+      await Game.updateOne(
+        {
+          roomId: req.params.roomID,
         },
-      },
-    },
-    () => {}
-  );
-  ws.getWebSocketServer()
-    .clients.forEach((client) => {
-      if ((client.role = "TEAM")) {
-        client.send(
-          JSON.stringify({
-            type: "NEXT_QUESTION",
-            questionId: questionId,
-          })
-        );
-      }
-    })
-    .catch((e) => {
-      res.status(404).json("Query went wrong, please try again.");
-    });
+        {
+          $addToSet: {
+            questions: {
+              question: requestedQuestion._id,
+            },
+          },
+        },
+        () => {}
+      );
+      ws.getWebSocketServer().clients.forEach((client) => {
+          if ((client.role = "TEAM")) {
+            client.send(
+              JSON.stringify({
+                type: "NEXT_QUESTION",
+                questionId: questionId,
+              })
+            );
+          }
+        });
+      res.status(200).send();
+    } 
+  }
+  catch(error)
+  {
+    res.status(500).json({message: error.message});
+  }
 });
 
 // Quizmaster starts a new round
