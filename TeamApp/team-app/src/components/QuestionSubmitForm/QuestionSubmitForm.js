@@ -21,7 +21,7 @@ export default function QuestionSubmitForm(props)
         if(event.keyCode === 13)
         {
             event.preventDefault();
-            console.log("ENTUUURR");
+            
         }
     }
 

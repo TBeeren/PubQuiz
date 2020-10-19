@@ -7,18 +7,17 @@ const questionSchema = new mongoose.Schema({
     required: true,
   },
   questionText: {
-      type: String,
-      required: true
+    type: String,
+    required: true,
   },
   answer: {
     type: String,
-    required: true
+    required: true,
   },
   category: {
-      type: String,
-      required: true
-  }
+    type: String,
+    required: true,
+  },
 });
-
 
 const question = mongoose.model("Question", questionSchema);

@@ -1,5 +1,5 @@
 //React
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 // Components
@@ -8,7 +8,6 @@ import SingleSelectionList from "../../SingleSelectionList/SingleSelectionList";
 import NavButtons from "../../NavButtons/NavButtons";
 import {
   fetchQuestions,
-  NextQuestionAction,
 } from "../../../actions/QuestionActions";
 
 // Artifacts
@@ -20,19 +19,12 @@ import "./ChooseQuestion.css";
 function ChooseQuestion() {
   const questionNumber = useSelector((state) => state.question.questionNumber);
   const roomId = useSelector((state) => state.quizInfo.roomId);
-  const rounds = useSelector((state) => state.round.rounds);
-  const path = `/question/${questionNumber}`;
-
   const dispatch = useDispatch();
-
-  function newQuestionCallback(id) {
-    dispatch(NextQuestionAction(id));
-  }
 
   // TODO: Get rounds dynamically. Now it returns an error.
   useEffect(() => {
     dispatch(fetchQuestions(roomId, 1));
-  });
+  },[false]);
 
   return (
     <div>
@@ -40,10 +32,10 @@ function ChooseQuestion() {
         title="Choose Question"
         description="Select the next Question"
       ></QuizInformation>
-      <SingleSelectionList onSelect={() => newQuestionCallback}></SingleSelectionList>
+      <SingleSelectionList></SingleSelectionList>
       <NavButtons
         title="Start Question?"
-        path={path}
+        path={"/question/" + questionNumber}
         returnButton={false}
       ></NavButtons>
     </div>

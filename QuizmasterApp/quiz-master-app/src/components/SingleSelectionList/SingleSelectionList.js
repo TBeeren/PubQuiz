@@ -1,8 +1,12 @@
 // React
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+
 // Components
 import Selection from "../Selection/Selection";
+import {
+  addNextQuestion,
+} from "../../actions/QuestionActions";
 
 // Artifacts
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -13,9 +17,11 @@ function SingleSelectionList(props) {
   const nSelections = 5;
   const questions = useSelector((state) => state.question.questions);
   const [buttons, setButtons] = useState([false, false, false, false, false]);
+  const roomId = useSelector((state) => state.quizInfo.roomId);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    for (var i = 0; i < nSelections; i++) {
+    for (var i = 0; i < buttons.length; i++) {
       try {
         if (buttons[i]) {
           document.getElementById(i).classList.add("selected");
@@ -32,15 +38,17 @@ function SingleSelectionList(props) {
 
   function clickHandler(i) {
     let tempArray = [];
+    let questionArray = []
     for (var j = 0; j < nSelections; j++) {
       if (i === j) {
         tempArray.push(true);
-        props.onSelect(questions[j].questionNumber);
+        questionArray.push(questions[j])
       } else {
         tempArray.push(false);
       }
     }
     setButtons(tempArray);
+    dispatch(addNextQuestion(roomId, questionArray[0]));
   }
 
   return (
