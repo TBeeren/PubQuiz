@@ -9,6 +9,7 @@ import NavButtons from "../../NavButtons/NavButtons";
 import { fetchCategories } from "../../../actions/QuizActions";
 import { newRound } from "../../../actions/RoundActions";
 
+
 // Artifacts
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -19,7 +20,6 @@ function ChooseCategory() {
   const categories = useSelector((state) => state.quizInfo.categories);
   const [buttons, setButtons] = useState([false, false, false, false, false]);
   const roomId = useSelector(state => state.quizInfo.roomId);
-  const roundNumber = useSelector(state => state.round.rounds.slice(-1)[0].roundNumber);
   const path = `/select-question`;
 
   const dispatch = useDispatch();
@@ -35,7 +35,8 @@ function ChooseCategory() {
         tempArray.push(categories[i]);
       }
     });
-    dispatch(newRound(roomId, roundNumber + 1, tempArray));
+    // TODO: Get new round number
+    dispatch(newRound(roomId, 1, tempArray));
   };
 
   useEffect(() => {

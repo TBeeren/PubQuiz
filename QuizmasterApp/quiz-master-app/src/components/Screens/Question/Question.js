@@ -13,7 +13,15 @@ import "./Question.css";
 
 function Question() {
   const questionNumber = useSelector((state) => state.question.questionNumber);
+  const questionCounter = useSelector((state) => state.round.questionNumber);
   const question = useSelector((state) => state.question.question);
+  let path = "";
+
+  if(questionCounter !== 12){
+    path = "/select-question";
+  } else  {
+    path = "/select-categories";
+  }
 
   return (
     <div>
@@ -24,7 +32,7 @@ function Question() {
       <AnswerStatus></AnswerStatus>
       <NavButtons
         title="Next Question?"
-        path="/select-question"
+        path={path}
         returnButton={false}
       ></NavButtons>
     </div>

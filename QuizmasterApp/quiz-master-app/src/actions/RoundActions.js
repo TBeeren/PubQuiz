@@ -10,6 +10,13 @@ export function NewRoundAction(roundNumber, categories){
     }
 }  
 
+export function UpdateQuestionAction(questionNumber){
+    return {
+        type: "UPDATE_QUESTION",
+        payload: questionNumber
+    }
+}
+
 export function newRound(roomId, roundNumber, categories){
     return async function(dispatch)
     {
