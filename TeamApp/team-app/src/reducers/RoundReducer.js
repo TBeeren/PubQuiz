@@ -6,12 +6,12 @@ export default function RoundReducer(state = initialState, action)
 {
     switch (action.type) {
         case "UPDATE_ROUND":
-            {
-                return{
-                    ...state,
-                    roundNumber: action.payload
-                }
+        {
+            return{
+                ...state,
+                roundNumber: action.payload
             }
+        }
         default:
             return state;
     }

@@ -9,6 +9,7 @@ import NavButtons from "../../NavButtons/NavButtons";
 import {
   fetchQuestions,
 } from "../../../actions/QuestionActions";
+import { UpdateQuestionAction } from "../../../actions/RoundActions";
 
 // Artifacts
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -19,7 +20,13 @@ import "./ChooseQuestion.css";
 function ChooseQuestion() {
   const questionNumber = useSelector((state) => state.question.questionNumber);
   const roomId = useSelector((state) => state.quizInfo.roomId);
+  const questionCounter = useSelector((state) => state.round.questionNumber);
   const dispatch = useDispatch();
+
+  const onNewQuestion = () => {
+    dispatch(UpdateQuestionAction(questionCounter + 1));
+    console.log(questionCounter);
+  }
 
   // TODO: Get rounds dynamically. Now it returns an error.
   useEffect(() => {
@@ -37,6 +44,7 @@ function ChooseQuestion() {
         title="Start Question?"
         path={"/question/" + questionNumber}
         returnButton={false}
+        callback={onNewQuestion}
       ></NavButtons>
     </div>
   );
