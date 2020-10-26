@@ -1,7 +1,8 @@
 // React
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useStore } from "react-redux";
 import { Link } from "react-router-dom";
+import { openSocket } from '../../websocket';
 
 import { createQuiz } from "../../actions/QuizActions";
 
@@ -14,12 +15,14 @@ import "./CreateQuiz.css";
 function CreateQuiz() {
   const [quizName, setQuizName] = useState("");
   const dispatch = useDispatch();
+  const store = useStore();
 
   const inputHandler = (e) => {
     setQuizName(e.target.value);
   };
 
   const submitHandler = (e) => {
+    openSocket(store);
     dispatch(createQuiz(quizName));
   };
 

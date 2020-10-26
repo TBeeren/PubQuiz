@@ -19,7 +19,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./ChooseQuestion.css";
 
 function ChooseQuestion() {
-  const questionNumber = useSelector((state) => state.question.questionNumber);
+  const questionId = useSelector((state) => state.question.questionNumber);
   const roomId = useSelector((state) => state.quizInfo.roomId);
   const question = useSelector((state) => state.question.question);
   const questionCounter = useSelector((state) => state.round.questionNumber);
@@ -28,7 +28,7 @@ function ChooseQuestion() {
 
   const onNewQuestion = () => {
     dispatch(UpdateQuestionAction(questionCounter + 1));
-    dispatch(addNextQuestion(roomId, {question, questionNumber}));
+    dispatch(addNextQuestion(roomId, questionId));
   }
 
   useEffect(() => {
@@ -44,7 +44,7 @@ function ChooseQuestion() {
       <SingleSelectionList></SingleSelectionList>
       <NavButtons
         title="Start Question?"
-        path={"/question/" + questionNumber}
+        path={"/question/" + questionId}
         returnButton={false}
         callback={onNewQuestion}
       ></NavButtons>

@@ -28,6 +28,18 @@ export default function AnswerReducer(state = initialState, action){
                 teamAnswers: newState
             };
         }
+        case "SUBMITTED_ANSWER":
+        {
+            return({
+                ...state,
+                teamAnswers: action.payload
+            })
+        }
+
+        case "ADD_QUESTION":
+        {
+            return(initialState);
+        }
         default:
         return state
     }

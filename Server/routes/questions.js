@@ -40,10 +40,17 @@ questionRouter.post(
       );
 
       ws.getWebSocketServer().clients.forEach((client) => {
-        if ((client.role === "SCOREBOARD")) {
+        if (client.role === "SCOREBOARD") {
           client.send(
             JSON.stringify({
               type: "FETCH_ANSWERED_TEAMS"
+            })
+          );
+        }
+        if (client.role === "MASTER") {
+          client.send(
+            JSON.stringify({
+              type: "FETCH_ANSWERS"
             })
           );
         }

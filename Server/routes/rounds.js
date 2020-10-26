@@ -18,9 +18,7 @@ const Game = mongoose.model("Game");
 //Quizmaster posting what will be the next question
 roundRouter.post("/api/v1/games/:roomID/round", async (req, res) => {
   try {
-    console.log("Progressing the round!: ", req.body);
     if (req.body.roundProgression) {
-      console.log("Validation");
       ws.getWebSocketServer().clients.forEach((client) => {
         if ((client.role === "TEAM")) {
           client.send(
@@ -40,39 +38,36 @@ roundRouter.post("/api/v1/games/:roomID/round", async (req, res) => {
         }
       });
       res.status(200).send();
-    } else {
+    } 
+    else {
       Game.update(
         { roomId: req.params.roomID },
         {
           $addToSet: {
             questions: {
-              question: req.body.question.questionNumber,
+              question: req.body.questionId,
             },
           },
         }
       ).then((e) => {
         res.status(201).send({
-          questionNumber: req.body.question.questionNumber,
+          questionNumber: req.body.questionId,
         });
       })
-      .catch((e) => {
-        console.log(e.message);
-        res.status(404).json("Query went wrong, please try again.");
-      });
 
       ws.getWebSocketServer().clients.forEach((client) => {
         if ((client.role === "TEAM" || client.role === "SCOREBOARD")) {
           client.send(
             JSON.stringify({
               type: "NEXT_QUESTION",
-              questionId: questionId,
+              questionId: req.body.questionId,
             })
           )
         }
       })
     } 
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(400).json({ message: error.message });
   }
 });
 

@@ -33,7 +33,7 @@ function Question() {
   return (
     <div>
       <QuestionInfo
-        questionNumber={questionNumber}
+        questionNumber={questionCounter}
         question={question}
       ></QuestionInfo>
       <AnswerStatus></AnswerStatus>
