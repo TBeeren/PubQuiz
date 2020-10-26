@@ -18,6 +18,10 @@ const questionSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  language: {
+    type: String,
+    required: true
+  }
 });
 
 const question = mongoose.model("Question", questionSchema);

@@ -19,16 +19,28 @@ mongoose.connect(`mongodb://localhost:27017/${dbName}`,  {useNewUrlParser: true 
 
 async function seedQuestion() {
     await Question.deleteMany();
-    let questions = await promiseWrappers.readFileP('seedData.json');
+    let questions = await promiseWrappers.readFileP('seedData_EN.json');
     questions = await JSON.parse(questions);
-    questions = questions.map((element, index) => {
+    let questionsEnglish = questions.map((element, index) => {
         return {
             ...element,
-            _id: index
+            _id: index,
+            language: "English"
         }
     });
-    console.log(questions);
+
+    questions = await promiseWrappers.readFileP('seedData_NL.json');
+    questions = await JSON.parse(questions);
+    let questionsDutch = questions.map((element, index) => {
+        return {
+            ...element,
+            _id: index + questionsEnglish.length,
+            language: "Nederlands"
+        }
+    });
+
+    let allQuestions = [...questionsEnglish, ...questionsDutch]
     await Question.insertMany(
-        questions
+        allQuestions
     );
 }
