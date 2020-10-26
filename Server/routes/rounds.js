@@ -108,8 +108,7 @@ roundRouter.post("/api/v1/games/:roomID/round/categories", (req, res) => {
         },
       },
     }
-  )
-    .then((_) => {
+  ).then((_) => {
       res.status(200).json({
         roundNumber: req.body.roundNumber,
         categories: req.body.categories,
@@ -121,9 +120,16 @@ roundRouter.post("/api/v1/games/:roomID/round/categories", (req, res) => {
     });
 });
 
+roundRouter.get("/api/v1/games/:roomID/round", async (req, res) => {
+  let rounds = await Game.find({ roomId: req.params.roomID }, {rounds: 1});
+  rounds = rounds[0].rounds;
+  res.status(200).json({
+    roundNumber: rounds[rounds.length - 1].roundNumber
+  });
+})
+
 // Quizmaster asks for all categories for the next round and update the database with scores xD
 roundRouter.get("/api/v1/games/:roomID/categories", async (req, res) => {
-
   let rounds = await Game.find({roomId: req.params.roomID}, {rounds: 1})
   rounds = rounds[0].rounds;
   if(rounds.length)

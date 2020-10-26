@@ -137,7 +137,7 @@ None
 ##### Response
 ```
 {
-    roundProgression: Number
+    roundNumber: Number
 }
 ```
 ---

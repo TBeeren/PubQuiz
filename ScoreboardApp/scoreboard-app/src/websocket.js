@@ -1,5 +1,6 @@
 import {fetchScores, fetchAnsweredTeams} from './actions/TeamsActions'
 import {fetchNewQuestion} from './actions/QuestionActions'
+import {fetchRoundNumber} from "./actions/RoundActions"
 
 const websocketAddress = "ws://localhost:3001/websocket"
 let ws;
@@ -22,13 +23,15 @@ export function openSocket(store, history, roomId) {
       case "FETCH_SCORES":
           {
             globalStore.dispatch(fetchScores(globalStore.getState().signInInfo.roomId));
+            globalStore.dispatch(fetchRoundNumber(globalStore.getState().signInInfo.roomId));
             history.push("/intermission");
             break;
           }
       case "NEXT_QUESTION":
         {
           console.log(data);
-          globalStore.dispatch(fetchNewQuestion(globalStore.getState().signInInfo.roomId, data.questionId));;
+          globalStore.dispatch(fetchNewQuestion(globalStore.getState().signInInfo.roomId, data.questionId));
+          globalStore.dispatch(fetchRoundNumber(globalStore.getState().signInInfo.roomId));
           history.push("/question");
           break;
         }

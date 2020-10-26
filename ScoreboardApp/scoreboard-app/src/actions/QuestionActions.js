@@ -14,14 +14,14 @@ function NewQuestionAction(question, questionId, category, number)
 }
 
 export function fetchNewQuestion(roomId, questionId)
-{
-    console.log("questionId being fetched", questionId);    
+{  
     return async function(dispatch)
     {
         try
         {
             let response = await fetch(`${applicationHost}/api/v1/games/${roomId}/questions/${questionId}`);
             response = await response.json();
+            console.log("Res: ",response);
             dispatch(NewQuestionAction(response.question, questionId, response.category, response.questionNumber));
         }
         catch(error)

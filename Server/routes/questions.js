@@ -70,14 +70,16 @@ questionRouter.get(
     console.log("TeamApp requesting the next question");
     const questionId = parseInt(req.params.questionId);
 
-    let requestedQuestion = await Question.findOne({ _id: questionId }).exec();
+    let requestedQuestion = await Question.findOne({ _id: questionId });
+    let questions = await Game.find({roomId: req.params.roomId},{questions: 1});
+    questions = questions[0].questions;
+    let questionNumber = questions.length % 12;
 
     res.status(200).json({
       question: requestedQuestion.questionText,
       questionId: requestedQuestion._id,
       category: requestedQuestion.category,
-      //TODO give proper questionnumber
-      questionNumber: 1,
+      questionNumber: questionNumber,
     });
   }
 );
