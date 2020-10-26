@@ -3,7 +3,6 @@ const express = require("express");
 const ws = require("../index");
 const { ObjectID } = require("bson");
 const mongoose = require("mongoose");
-const ws = require("../index");
 
 const teamRouter = express.Router();
 require("../models/game");
