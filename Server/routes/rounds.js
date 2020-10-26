@@ -121,8 +121,77 @@ roundRouter.post("/api/v1/games/:roomID/round/categories", (req, res) => {
     });
 });
 
-// Quizmaster asks for all categories for the next round
-roundRouter.get("/api/v1/games/:roomID/categories", (req, res) => {
+// Quizmaster asks for all categories for the next round and update the database with scores xD
+roundRouter.get("/api/v1/games/:roomID/categories", async (req, res) => {
+
+  let rounds = await Game.find({roomId: req.params.roomID}, {rounds: 1})
+  rounds = rounds[0].rounds;
+  if(rounds.length)
+  {
+    let teams = await Game.find({ roomId: req.params.roomID }, { teams: 1 });
+    
+    teams = teams[0].teams;
+    console.log("teams before sort", teams);
+    teams.sort((teamA, teamB) => {
+      return teamB.roundScore - teamA.roundScore;
+    })
+  
+    console.log("teams after sort", teams);
+  
+    for(let i = 0; i < teams.length; i++)
+    {
+      let points = 0
+      switch(i)
+      {
+        case 0:
+          {
+            points = 4;
+            break;
+          }
+        case 1:
+          {
+            points = 2;
+            break;
+          }
+        case 2:
+          {
+            points = 1;
+            break;
+          }
+        default:
+          {
+            points = 0.1;
+            break;
+          }
+      }
+      
+      console.log("points for team: ", teams[i].name, "kijk dat is slim: ", points);
+      await Game.findOneAndUpdate(
+        { roomId: req.params.roomID },
+        {
+          $inc: { "teams.$[inner].score": points
+        },
+      },
+        {
+          arrayFilters: [{ "inner.name": teams[i].name}],
+        }
+      );
+    }
+
+    teams.forEach(async (team) => {
+      await Game.findOneAndUpdate(
+        { roomId: req.params.roomID },
+        {
+          $set: { "teams.$[inner].roundScore": 0
+        },
+      },
+        {
+          arrayFilters: [{ "inner.name": team.name}],
+        }
+      );
+    })
+  }
+
   Question.find()
     .distinct("category")
     .then((categories) => {
@@ -132,6 +201,7 @@ roundRouter.get("/api/v1/games/:roomID/categories", (req, res) => {
       console.log(e.message);
       res.status(404).json("Query went wrong, please try again.");
     });
+    givePoints = true;
 });
 
 // Fetching all questions based on the category
