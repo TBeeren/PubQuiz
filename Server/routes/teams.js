@@ -59,33 +59,40 @@ teamRouter.post("/api/v1/games/:roomID/teams", (req, res) => {
 });
 
 //Quizmaster approving a teams answer
-teamRouter.put("/api/v1/games/:roomID/teams/:teamID/answer", async (req, res) => {
-  console.log("approving an answer", req.body);
-  //get room
-  //get latest question
-  //get answers
-  //get last answer from team update
-  //update correctness
+teamRouter.put(
+  "/api/v1/games/:roomID/teams/:teamID/answer",
+  async (req, res) => {
+    console.log("approving an answer", req.body);
+    //get room
+    //get latest question
+    //get answers
+    //get last answer from team update
+    //update correctness
 
-  try{
-    await Game.findOneAndUpdate(
-    {
-      roomId: req.params.roomID,
-    },
-    {
-        $set: { "questions.$[inner].answers.$[innerInner].isCorrect": req.body.correct },
-      },
-      {
-        arrayFilters: [{ "inner.question": req.body.questionId }, {"innerInner.teamName": req.params.teamID}]
-      }
-    );
-    res.status(200).send();
+    try {
+      await Game.findOneAndUpdate(
+        {
+          roomId: req.params.roomID,
+        },
+        {
+          $set: {
+            "questions.$[inner].answers.$[innerInner].isCorrect":
+              req.body.correct,
+          },
+        },
+        {
+          arrayFilters: [
+            { "inner.question": req.body.questionId },
+            { "innerInner.teamName": req.params.teamID },
+          ],
+        }
+      );
+      res.status(200).send();
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
   }
-  catch(error)
-  {
-    res.status(500).json({message: error.message});
-  }
-});
+);
 
 //Scoreboard/ quizmaster requesting teams and their scores
 teamRouter.get("/api/v1/games/:roomID/teams", (req, res) => {

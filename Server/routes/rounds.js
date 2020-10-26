@@ -19,8 +19,33 @@ const Game = mongoose.model("Game");
 roundRouter.post("/api/v1/games/:roomID/round", async (req, res) => {
   try {
     if (req.body.roundProgression) {
+      // Alle teams in de room
+      // Alle laatste antwoorden van de teams
+      // Correctness ophalen per team
+      // Roundscore ++
+      let roomInfo = await Game.findOne({ roomId: req.params.roomID });
+      console.log("RoomInfo: ", roomInfo);
+      let questionsArray = roomInfo.questions;
+      let lastQuestion = questionsArray[questionsArray.length - 1];
+      let answers = lastQuestion.answers;
+
+      for (var answer of answers) {
+        if (answer.isCorrect) {
+          await Game.findOneAndUpdate(
+            { roomId: req.params.roomID },
+            {
+              $inc: { "teams.$[inner].roundScore": 1 
+            },
+          },
+            {
+              arrayFilters: [{ "inner.name": answer.teamName }],
+            }
+          );
+        }
+      }
+
       ws.getWebSocketServer().clients.forEach((client) => {
-        if ((client.role === "TEAM")) {
+        if (client.role === "TEAM") {
           client.send(
             JSON.stringify({
               type: "VALIDATE_ANSWER",
@@ -29,17 +54,16 @@ roundRouter.post("/api/v1/games/:roomID/round", async (req, res) => {
         }
       });
       ws.getWebSocketServer().clients.forEach((client) => {
-        if ((client.role === "SCOREBOARD")) {
+        if (client.role === "SCOREBOARD") {
           client.send(
             JSON.stringify({
-              type: "FETCH_SCORES"
+              type: "FETCH_SCORES",
             })
           );
         }
       });
       res.status(200).send();
-    } 
-    else {
+    } else {
       Game.update(
         { roomId: req.params.roomID },
         {
@@ -53,20 +77,21 @@ roundRouter.post("/api/v1/games/:roomID/round", async (req, res) => {
         res.status(201).send({
           questionNumber: req.body.questionId,
         });
-      })
+      });
 
       ws.getWebSocketServer().clients.forEach((client) => {
-        if ((client.role === "TEAM" || client.role === "SCOREBOARD")) {
+        if (client.role === "TEAM" || client.role === "SCOREBOARD") {
           client.send(
             JSON.stringify({
               type: "NEXT_QUESTION",
               questionId: req.body.questionId,
             })
-          )
+          );
         }
-      })
-    } 
+      });
+    }
   } catch (error) {
+    console.log("Dikke error op je smoel x : ",error.message);
     res.status(400).json({ message: error.message });
   }
 });

@@ -4,9 +4,10 @@ const initialState = {
     {
       question: "",
       questionNumber: 1,
+      correctAnswer: ""
     },
   ],
-  correctAnswer: null,
+  correctAnswer: "",
   questionNumber: 1,
 };
 
@@ -29,6 +30,7 @@ export default function QuestionReducer(state = initialState, action) {
         ...state,
         question: action.payload.question,
         questionNumber: action.payload.questionNumber,
+        correctAnswer: action.payload.correctAnswer
       }
     }
     default:

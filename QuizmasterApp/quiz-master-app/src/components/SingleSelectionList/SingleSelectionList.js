@@ -17,7 +17,6 @@ function SingleSelectionList(props) {
   const nSelections = 5;
   const questions = useSelector((state) => state.question.questions);
   const [buttons, setButtons] = useState([false, false, false, false, false]);
-  const roomId = useSelector((state) => state.quizInfo.roomId);
   const dispatch = useDispatch();
 
   useEffect(() => {

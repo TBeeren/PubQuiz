@@ -13,7 +13,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./AnswerStatus.css";
 
 function AnswerStatus() {
-  const teams = useSelector((state) => state.answers.teamAnswers);
+  const teams = useSelector(state => state.answers.teamAnswers);
+  const correctAnswer = useSelector(state => state.question.correctAnswer); 
 
   return (
     <div>
@@ -22,7 +23,7 @@ function AnswerStatus() {
           {teams.map(function (item, i) {
             if (item.value !== null) {
               return (
-                <TeamAnswer key={i} name={item.teamName} answer={item.value} correct="13" correctness={item.correctness}></TeamAnswer>
+                <TeamAnswer key={i} name={item.teamName} answer={item.value} correct={correctAnswer} correctness={item.correctness}></TeamAnswer>
               );
             }
           })}

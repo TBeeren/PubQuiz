@@ -23,7 +23,8 @@ export function addQuestionAction(question) {
     type: "ADD_QUESTION",
     payload: {
       question: question.question,
-      questionNumber: question.questionNumber
+      questionNumber: question.questionNumber,
+      correctAnswer: question.correctAnswer
     }
   }
 }
@@ -76,6 +77,7 @@ export function fetchQuestions(roomId, round) {
         return {
           question: item.questionText,
           questionNumber: item._id,
+          correctAnswer: item.answer
         };
       });
       dispatch(NewQuestionAction(mappedRes));
