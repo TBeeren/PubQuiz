@@ -13,7 +13,6 @@ import "./CreateQuiz.css";
 
 function CreateQuiz() {
   const [quizName, setQuizName] = useState("");
-  const [roomId, setRoomId] = useState("");
   const dispatch = useDispatch();
 
   const inputHandler = (e) => {

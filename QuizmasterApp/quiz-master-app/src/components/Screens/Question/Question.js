@@ -1,11 +1,12 @@
 // React
 import React from "react";
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 // Components
 import NavButtons from "../../NavButtons/NavButtons";
 import QuestionInfo from "../../QuestionInfo/QuestionInfo";
 import AnswerStatus from "../../AnswerStatus/AnswerStatus";
+import { roundProgression } from "../../../actions/RoundActions"
 
 // Artifacts
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -14,13 +15,19 @@ import "./Question.css";
 function Question() {
   const questionNumber = useSelector((state) => state.question.questionNumber);
   const questionCounter = useSelector((state) => state.round.questionNumber);
+  const roomId = useSelector((state) => state.quizInfo.roomId);
   const question = useSelector((state) => state.question.question);
+  const dispatch = useDispatch();
   let path = "";
 
   if(questionCounter !== 12){
     path = "/select-question";
   } else  {
     path = "/select-categories";
+  }
+
+  const onProgress = () => {
+    dispatch(roundProgression(roomId));
   }
 
   return (
@@ -34,6 +41,7 @@ function Question() {
         title="Next Question?"
         path={path}
         returnButton={false}
+        callback={onProgress}
       ></NavButtons>
     </div>
   );

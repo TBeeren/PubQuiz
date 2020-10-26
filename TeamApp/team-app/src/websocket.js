@@ -13,6 +13,10 @@ export function openSocket(store, history ,teamName, roomId) {
     ws.send(JSON.stringify({type: "IDENTIFY", teamName: teamName, roomId: roomId, role: "TEAM"}));
   };
 
+  ws.onclose = function (message) {
+    history.push("/");
+  }
+
   ws.onmessage = function (message) {
     const data = JSON.parse(message.data);
     console.log("ws onmessage: ", data);

@@ -1,12 +1,13 @@
 //React
-import React from "react";
-import { useSelector, useDispatch } from 'react-redux'
+import React, { useEffect } from "react";
+import { useSelector, useDispatch, useStore} from 'react-redux'
 
 // Components
 import TeamApproveList from "../../TeamApproveList/TeamApproveList";
 import QuizInformation from "../../QuizInformation/QuizInformation";
 import NavButtons from "../../NavButtons/NavButtons";
 import { startQuiz } from "../../../actions/QuizActions";
+import { openSocket } from '../../../websocket';
 
 // Artifacts
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -18,6 +19,7 @@ function ApproveTeams() {
   const dispatch = useDispatch();
   const title = useSelector(state => state.quizInfo.quizName)
   const roomId = useSelector(state => state.quizInfo.roomId)
+  const store = useStore();
   const description = `Code: ${roomId}`
 
   const onStartQuiz = () => {
@@ -27,6 +29,10 @@ function ApproveTeams() {
   const onStopQuiz = () => {
     dispatch(startQuiz(roomId, false));
   };
+
+  useEffect(() => {
+    openSocket(store, roomId);
+  });
   
   return (
     <div>

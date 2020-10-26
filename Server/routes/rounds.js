@@ -17,55 +17,53 @@ const Game = mongoose.model("Game");
 
 //Quizmaster posting what will be the next question
 roundRouter.post("/api/v1/games/:roomID/round", async (req, res) => {
-  console.log(
-    `Quizmaster of room ${req.params.roomID} selected question: ${req.body.questionId}`
-  );
-  try{
-    if(req.body.roundProgression){
+  try {
+    console.log("Progressing the round!: ", req.body);
+    if (req.body.roundProgression) {
+      console.log("Validation");
       ws.getWebSocketServer().clients.forEach((client) => {
-        if ((client.role = "TEAM")) {
+        if ((client.role == "TEAM")) {
           client.send(
             JSON.stringify({
-              type: "VALIDATE_ANSWER"
+              type: "VALIDATE_ANSWER",
             })
           );
         }
       });
       res.status(200).send();
-    }
-    else
-    {
-      const questionId = req.body.questionId;
-      let requestedQuestion = await Question.findOne({ _id: questionId });
-      await Game.updateOne(
-        {
-          roomId: req.params.roomID,
-        },
+    } else {
+      Game.update(
+        { roomId: req.params.roomID },
         {
           $addToSet: {
             questions: {
-              question: requestedQuestion._id,
+              question: req.body.question.questionNumber,
             },
           },
-        },
-        () => {}
-      );
-      ws.getWebSocketServer().clients.forEach((client) => {
-          if ((client.role = "TEAM")) {
-            client.send(
-              JSON.stringify({
-                type: "NEXT_QUESTION",
-                questionId: questionId,
-              })
-            );
-          }
+        }
+      ).then((e) => {
+        res.status(201).send({
+          questionNumber: req.body.question.questionNumber,
         });
-      res.status(200).send();
-    } 
-  }
-  catch(error)
-  {
-    res.status(500).json({message: error.message});
+      })
+      .catch((e) => {
+        console.log(e.message);
+        res.status(404).json("Query went wrong, please try again.");
+      });
+
+      ws.getWebSocketServer().clients.forEach((client) => {
+        if ((client.role == "TEAM")) {
+          client.send(
+            JSON.stringify({
+              type: "NEXT_QUESTION",
+              questionId: req.body.question.questionNumber,
+            })
+          );
+        }
+      });
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 });
 
@@ -109,12 +107,8 @@ roundRouter.get("/api/v1/games/:roomID/categories", (req, res) => {
 
 // Fetching all questions based on the category
 roundRouter.get("/api/v1/games/:roomID/:round/questions", async (req, res) => {
-  console.log(
-    `Quizmaster asking for all questions on round ${req.params.round} in room: ${req.params.roomID}`
-  );
   const nQuestionsToFetch = 5;
   let categoriesList = [];
-  let roundNumber;
 
   // Find round of team by roomID
   await Game.find(
@@ -138,7 +132,8 @@ roundRouter.get("/api/v1/games/:roomID/:round/questions", async (req, res) => {
       answeredQuestions = res.map((item, i) => {
         return item.question;
       });
-    }).catch((e) => {
+    })
+    .catch((e) => {
       console.log(e.message);
       res.status(404).json("Query went wrong, please try again.");
     });
@@ -153,12 +148,12 @@ roundRouter.get("/api/v1/games/:roomID/:round/questions", async (req, res) => {
           { category: categoriesList[1] },
           { category: categoriesList[2] },
         ],
-        _id: { $nin: answeredQuestions }
-      }
+        _id: { $nin: answeredQuestions },
+      },
     },
-  ]).limit(5)
+  ])
+    .limit(5)
     .then((question) => {
-      console.log(question);
       res.status(200).json(question);
     });
 });

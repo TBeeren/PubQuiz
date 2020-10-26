@@ -1,5 +1,5 @@
 // React
-import React from "react";
+import React, {useState} from "react";
 
 // Component
 import NavButton from "../NavButton/NavButton";
@@ -11,7 +11,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./NavButtons.css";
 
 function NavButtons(props) {
-  const [modalShow, setModalShow] = React.useState(false);
+  const [modalShow, setModalShow] = useState(false);
 
   let buttonsHtml;
   let modalHtml;

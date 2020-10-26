@@ -5,15 +5,22 @@ const initialState = {
       categories: [],
     },
   ],
-  questionNumber: 10
+  questionNumber: 10,
+  roundNumber: 0
 };
 
 export default function RoundReducer(state = initialState, action) {
   switch (action.type) {
     case "NEW_ROUND": {
+      let newState = [];
+      state.rounds.forEach((item) => {
+          newState.push(item);
+      })
+      newState.push(action.payload);
       return {
-        ...state,
-        rounds: action.payload.rounds,
+          ...state,
+          rounds: newState,
+          roundNumber: action.payload.roundNumber
       };
     }
     case "UPDATE_QUESTION": {

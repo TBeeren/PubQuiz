@@ -10,9 +10,9 @@ export function CreateQuizAction(quizInfo) {
     }
 }
 
-export function ReceivedNewTeamAction(teamNames){
+export function FetchTeamsAction(teamNames){
     return {
-        type: "RECEIVED_NEW_TEAM",
+        type: "FETCH_TEAMS",
         payload: teamNames
     }
 }
@@ -40,6 +40,48 @@ export function NewCategoryAction(categories)
         type: "NEW_CATEGORIES",
         payload: {
             categories: categories,
+        }
+    }
+}
+
+export function fetchTeam(roomId){
+    return async function(dispatch)
+    {
+        try
+        {
+            let response = await fetch(`${applicationHost}/api/v1/games/${roomId}/teams`);
+            response = await response.json();
+            let teamsArray = response[0].teams;
+            let resArray = [];  
+            for(var i = 0; i < teamsArray.length; i++){
+                resArray.push(teamsArray[i].name)
+            }
+            dispatch(FetchTeamsAction(resArray));
+        }
+        catch(error)
+        {
+            console.log(error);
+        }
+    }
+}
+
+export function removeTeam(roomId, teamName){
+    return async function(dispatch){
+        try {
+            let body = {
+                teamName: teamName
+            }
+            let response = await fetch(`${applicationHost}/api/v1/games/${roomId}/teams/${teamName}`, {
+                method: "Delete",
+                body: JSON.stringify(body),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            });
+            response = await response.json();
+            dispatch(RemoveTeamAction(response));
+        } catch (e) {
+            console.log(e.message);
         }
     }
 }
@@ -88,7 +130,6 @@ export function startQuiz(roomId, isStarted)
                 }
             });
             response = await response.json();
-            console.log(response);
             dispatch(StartQuizAction(response));
         }
         catch(error)

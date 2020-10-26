@@ -45,28 +45,6 @@ questionRouter.put("/api/v1/games/:roomId/questions/:questionId/answer", (req, r
     console.log("team updating an answer", req.body);
 });
 
-// Quizmaster posts next question
-questionRouter.post("/api/v1/games/:roomId/questions", async (req, res) => {
-  Game.update(
-    { roomId: req.params.roomId },
-    {
-      $addToSet: {
-        questions: {
-          question: req.body.question.questionNumber,
-        },
-      },
-    }
-  ).then((e) => {
-      res.status(201).send({
-        questionNumber: req.body.question.questionNumber,
-      });
-    })
-    .catch((e) => {
-      console.log(e.message);
-      res.status(404).json("Query went wrong, please try again.");
-    });
-});
-
 //TeamApp requesting the next question
 questionRouter.get(
   "/api/v1/games/:roomId/questions/:questionId",
@@ -104,7 +82,7 @@ questionRouter.get(
         questions: 1,
       }
     );
-    gameQAs.forEach((element) => {
+    gameQAs.questions.forEach((element) => {
       console.log(element);
     });
     

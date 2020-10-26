@@ -10,6 +10,7 @@ import {
   fetchQuestions,
 } from "../../../actions/QuestionActions";
 import { UpdateQuestionAction } from "../../../actions/RoundActions";
+import { addNextQuestion } from "../../../actions/QuestionActions"
 
 // Artifacts
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -20,18 +21,19 @@ import "./ChooseQuestion.css";
 function ChooseQuestion() {
   const questionNumber = useSelector((state) => state.question.questionNumber);
   const roomId = useSelector((state) => state.quizInfo.roomId);
+  const question = useSelector((state) => state.question.question);
   const questionCounter = useSelector((state) => state.round.questionNumber);
+  const roundNumber = useSelector((state) => state.round.roundNumber);
   const dispatch = useDispatch();
 
   const onNewQuestion = () => {
     dispatch(UpdateQuestionAction(questionCounter + 1));
-    console.log(questionCounter);
+    dispatch(addNextQuestion(roomId, {question, questionNumber}));
   }
 
-  // TODO: Get rounds dynamically. Now it returns an error.
   useEffect(() => {
-    dispatch(fetchQuestions(roomId, 1));
-  },[false]);
+    dispatch(fetchQuestions(roomId, roundNumber));
+  },[roundNumber]);
 
   return (
     <div>

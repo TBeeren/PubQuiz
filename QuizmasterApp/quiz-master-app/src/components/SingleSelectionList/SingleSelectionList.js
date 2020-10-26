@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 // Components
 import Selection from "../Selection/Selection";
 import {
-  addNextQuestion,
+  addQuestionAction,
 } from "../../actions/QuestionActions";
 
 // Artifacts
@@ -48,7 +48,7 @@ function SingleSelectionList(props) {
       }
     }
     setButtons(tempArray);
-    dispatch(addNextQuestion(roomId, questionArray[0]));
+    dispatch(addQuestionAction(questionArray[0]));
   }
 
   return (

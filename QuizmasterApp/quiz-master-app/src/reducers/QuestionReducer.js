@@ -2,12 +2,8 @@ const initialState = {
   question: null,
   questions: [
     {
-      question: "Question 1",
+      question: "",
       questionNumber: 1,
-    },
-    {
-      question: "Question 2",
-      questionNumber: 2,
     },
   ],
   correctAnswer: null,
