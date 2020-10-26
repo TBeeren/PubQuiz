@@ -28,13 +28,14 @@ export function addQuestionAction(question) {
   }
 }
 
-export function addNextQuestion(roomId, question) {
+export function addNextQuestion(roomId, questionId) {
   return async function (dispatch) {
     try {
       let body = {
-        question: question,
+        roundProgression: false, 
+        questionId: questionId,
       };
-      let response = await fetch(
+      await fetch(
         `${applicationHost}/api/v1/games/${roomId}/round`,
         {
           method: "Post",
@@ -44,7 +45,6 @@ export function addNextQuestion(roomId, question) {
           },
         }
       );
-      response = await response.json();
     } catch (error) {
       console.log(error);
     }

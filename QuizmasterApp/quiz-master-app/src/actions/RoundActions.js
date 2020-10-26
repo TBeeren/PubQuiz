@@ -18,7 +18,6 @@ export function UpdateQuestionAction(questionNumber){
 }
 
 export function roundProgression(roomID) {
-  console.log("Round progresions!");
     return async function (dispatch) {
       try {
         let body = {

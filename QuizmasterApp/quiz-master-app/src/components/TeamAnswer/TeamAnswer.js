@@ -1,7 +1,7 @@
 //React
 import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { ApproveAnswerAction } from "../../actions/AnswerActions"
+import { useDispatch, useSelector } from "react-redux";
+import { approveAnswer } from "../../actions/AnswerActions"
 
 // Component
 import QuestionModal from "../QuestionModal/QuestionModal";
@@ -15,6 +15,8 @@ import "./TeamAnswer.css";
 function TeamAnswer(props) {
   const [modalShow, setModalShow] = React.useState(false);
   const dispatch = useDispatch();
+  const currentQuestionId = useSelector(state => state.question.questionNumber);
+  const roomId = useSelector(state => state.quizInfo.roomId);
 
   useEffect(() => {
     if(!props.correctness) {
@@ -32,7 +34,7 @@ function TeamAnswer(props) {
         answer={props.answer}
         correct={props.correct}
         onHide={() => setModalShow(false)}
-        onApprove={() => dispatch(ApproveAnswerAction(props.name ,true))}
+        onApprove={() => dispatch(approveAnswer(roomId, props.name ,currentQuestionId, true))}
       />
       <button
         id={props.name}

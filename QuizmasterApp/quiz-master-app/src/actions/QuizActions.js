@@ -1,3 +1,5 @@
+import { identify } from '../websocket';
+
 const applicationHost = "http://localhost:3001";
 
 export function CreateQuizAction(quizInfo) {
@@ -103,6 +105,7 @@ export function createQuiz(name)
                 }
             });
             response = await response.json();
+            identify(response.roomId);
             dispatch(CreateQuizAction(response));
         }
         catch(error)

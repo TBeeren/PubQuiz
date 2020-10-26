@@ -1,22 +1,17 @@
 import { fetchTeam } from "./actions/QuizActions";
+import {fetchTeamAnswers} from "./actions/AnswerActions"
 
 const websocketAddress = "ws://localhost:3001/websocket";
 let ws;
 let store;
+let roomId;
 
-export function openSocket(store, roomId) {
+export function openSocket(store) {
   store = store;
   ws = new WebSocket(websocketAddress);
 
   ws.onopen = function (message) {
     console.log("Websocket Connection opened");
-    ws.send(
-      JSON.stringify({
-        type: "IDENTIFY",
-        roomId: roomId,
-        role: "MASTER",
-      })
-    );
   };
 
   ws.onmessage = function (message) {
@@ -26,6 +21,7 @@ export function openSocket(store, roomId) {
     switch (data.type) {
       case "FETCH_ANSWERS": {
         console.log("FETCH_ANSWERS");
+        store.dispatch(fetchTeamAnswers(store.getState().quizInfo.roomId, store.getState().question.questionNumber));
         break;
       }
       case "FETCH_TEAMS": {
@@ -47,6 +43,18 @@ export function openSocket(store, roomId) {
   };
 
   return ws;
+}
+
+export function identify(roomId)
+{
+  roomId = roomId;
+  ws.send(
+    JSON.stringify({
+      type: "IDENTIFY",
+      roomId: roomId,
+      role: "MASTER",
+    })
+  );
 }
 
 export function getWebSocket() {
