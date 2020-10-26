@@ -1,0 +1,11 @@
+#round-info{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+#round-text{
+    padding: 2%;
+    font-size: 2em;
+}

@@ -1,0 +1,22 @@
+#signUpForm{
+    height: 50vh;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: column;
+}
+
+.button-green
+{
+    background-color: #97D077;
+}
+
+.button-shape
+{
+    width: 50%;
+    height: 4em;
+}
+
+.input-width{
+    width: 80vw;
+}

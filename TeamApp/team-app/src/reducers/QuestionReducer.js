@@ -26,6 +26,7 @@ export default function QuestionInfoReducer(state = initialState, action)
                     ...state,
                     question: action.payload.question,
                     questionId: action.payload.questionId,
+                    teamAnswer: "",
                     questionNumber: action.payload.questionNumber,
                     isResubmit: false
                 }

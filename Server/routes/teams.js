@@ -2,6 +2,7 @@
 const express = require('express');
 const { ObjectID } = require("bson");
 const mongoose = require('mongoose');
+const ws = require("../index");
 
 const teamRouter = express.Router();
 require('../models/game')
@@ -23,6 +24,18 @@ teamRouter.post("/api/v1/games/:roomID/teams", (req, res) => {
             }
         }
     },() => {})
+
+    //Notify scoreboards
+    ws.getWebSocketServer().clients.forEach((client) => {
+        if ((client.role === "SCOREBOARD")) {
+          client.send(
+            JSON.stringify({
+              type: "FETCH_SCORES"
+            })
+          );
+        }
+      });
+
     res.status(201).send();
 });
 
