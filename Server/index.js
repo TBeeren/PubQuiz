@@ -39,8 +39,12 @@ webSocketServer.on('connection', (websocket) => {
             case "IDENTIFY":
                 {
                     websocket.roomId = messageObject.roomId;
-                    websocket.teamName = messageObject.teamName;
                     websocket.role = messageObject.role;
+                    if(messageObject.role == "TEAM")
+                    {
+                        websocket.teamName = messageObject.teamName;
+                    }
+                    console.log("roomId ", websocket.roomId, "role: ", websocket.role);
                     break;
                 }
             default:

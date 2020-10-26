@@ -3,6 +3,7 @@ const express = require("express");
 const ws = require("../index");
 const { ObjectID } = require("bson");
 const mongoose = require("mongoose");
+const ws = require("../index");
 
 const teamRouter = express.Router();
 require("../models/game");
@@ -29,12 +30,24 @@ teamRouter.post("/api/v1/games/:roomID/teams", (req, res) => {
   );
 
   try {
+    //Notify Quizmaster
     ws.getWebSocketServer().clients.forEach((client) => {
       if (client.role === "MASTER") {
         console.log("Send fetch teams to master");
         client.send(
           JSON.stringify({
             type: "FETCH_TEAMS",
+          })
+        );
+      }
+    });
+
+    //Notify Scoreboards
+    ws.getWebSocketServer().clients.forEach((client) => {
+      if (client.role === "SCOREBOARD") {
+        client.send(
+          JSON.stringify({
+            type: "FETCH_SCORES",
           })
         );
       }
@@ -77,12 +90,14 @@ teamRouter.delete("/api/v1/games/:roomID/teams/:teamID", (req, res) => {
 
   Game.update(
     { roomId: req.params.roomID },
-    { $pull: { 'teams': { name: req.params.teamID} } }
-  ).then((res) => {
-    console.log("Response: ", res)
-  }).catch((e) => {
-    console.log("Error: ", e.message)
-  });
+    { $pull: { teams: { name: req.params.teamID } } }
+  )
+    .then((res) => {
+      console.log("Response: ", res);
+    })
+    .catch((e) => {
+      console.log("Error: ", e.message);
+    });
 });
 
 module.exports = teamRouter;

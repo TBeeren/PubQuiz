@@ -22,10 +22,19 @@ roundRouter.post("/api/v1/games/:roomID/round", async (req, res) => {
     if (req.body.roundProgression) {
       console.log("Validation");
       ws.getWebSocketServer().clients.forEach((client) => {
-        if ((client.role == "TEAM")) {
+        if ((client.role === "TEAM")) {
           client.send(
             JSON.stringify({
               type: "VALIDATE_ANSWER",
+            })
+          );
+        }
+      });
+      ws.getWebSocketServer().clients.forEach((client) => {
+        if ((client.role === "SCOREBOARD")) {
+          client.send(
+            JSON.stringify({
+              type: "FETCH_SCORES"
             })
           );
         }
@@ -52,16 +61,16 @@ roundRouter.post("/api/v1/games/:roomID/round", async (req, res) => {
       });
 
       ws.getWebSocketServer().clients.forEach((client) => {
-        if ((client.role == "TEAM")) {
+        if ((client.role === "TEAM" || client.role === "SCOREBOARD")) {
           client.send(
             JSON.stringify({
               type: "NEXT_QUESTION",
-              questionId: req.body.question.questionNumber,
+              questionId: questionId,
             })
-          );
+          )
         }
-      });
-    }
+      })
+    } 
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

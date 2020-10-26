@@ -1,5 +1,6 @@
 const express = require("express");
 const questionRouter = express.Router();
+const ws = require("../index");
 const mongoose = require("mongoose");
 
 require("../models/question");
@@ -37,6 +38,16 @@ questionRouter.post(
           new: true
         }
       );
+
+      ws.getWebSocketServer().clients.forEach((client) => {
+        if ((client.role === "SCOREBOARD")) {
+          client.send(
+            JSON.stringify({
+              type: "FETCH_ANSWERED_TEAMS"
+            })
+          );
+        }
+      });
     res.status(201).json({});
 });
 
@@ -57,6 +68,7 @@ questionRouter.get(
     res.status(200).json({
       question: requestedQuestion.questionText,
       questionId: requestedQuestion._id,
+      category: requestedQuestion.category,
       //TODO give proper questionnumber
       questionNumber: 1,
     });
@@ -70,53 +82,84 @@ questionRouter.get(
     console.log(
       "TeamApp requesting the answer to a question and whether their answer was correct"
     );
-    let correctAnswer = await Question.findOne(
-      { _id: req.params.questionId },
-      { answer: 1 }
-    );
-    let gameQAs = await Game.findOne(
+    try{
+      let correctAnswer = await Question.findOne(
+        { _id: req.params.questionId },
+        { answer: 1 }
+      );
+      let gameQAs = await Game.findOne(
+        {
+          roomId: req.params.roomId,
+        },
+        {
+          questions: 1,
+        }
+      );
+      
+      let teamEntry;
+      gameQAs.questions.forEach((element)=>{
+          if(element.question === parseInt(req.params.questionId))
+          {
+              teamEntry = element.answers;
+          }
+      })
+  
+      let finalAnswer
+      for(let i = teamEntry.length - 1; i >= 0; i--)
       {
-        roomId: req.params.roomId,
-      },
-      {
-        questions: 1,
+          if(teamEntry[i].teamName === req.params.teamName)
+          {
+              finalAnswer = teamEntry[i];
+          }
       }
-    );
-    gameQAs.questions.forEach((element) => {
-      console.log(element);
-    });
-    
-    let teamEntry;
-    gameQAs.questions.forEach((element)=>{
-        if(element.question === parseInt(req.params.questionId))
-        {
-            teamEntry = element.answers;
-        }
-    })
-
-    let finalAnswer
-    for(let i = teamEntry.length - 1; i >= 0; i--)
-    {
-        if(teamEntry[i].teamName === req.params.teamName)
-        {
-            finalAnswer = teamEntry[i];
-        }
+      
+      res.status(200).json({
+          answer: correctAnswer.answer,
+          isCorrect: finalAnswer.isCorrect
+      });
     }
-    
-    res.status(200).json({
-        answer: correctAnswer.answer,
-        isCorrect: finalAnswer.isCorrect
+    catch(error){
+      res.status(500).json({
+        message: error.message,
     });
+    }
   }
 );
 
-//QuizMaster asking for answers to all questions
+//QuizMaster/Scoreboard asking for answers to all questions
 questionRouter.get(
   "/api/v1/games/:roomId/questions/:questionId/answers",
-  (req, res) => {
+  async (req, res) => {
     console.log("QuizMaster asking for answers to all questions");
-    res.json({
-      message: "goedzo",
+    let roomQuestions = await Game.findOne(
+      {roomId: req.params.roomId},
+      {questions: 1}
+      ).exec();
+    
+    let questionData;
+    roomQuestions.questions.forEach((element)=>{
+      if(element.question === parseInt(req.params.questionId))
+      {
+        questionData = element.answers;
+      }
+    })
+
+    let finalAnswers = []; 
+    let answeredTeams = [];
+
+    for(let i = questionData.length - 1; i >= 0; i--)
+    {
+        if(!answeredTeams.includes(questionData[i].teamName))
+        {
+          answeredTeams.push(questionData[i].teamName);
+          finalAnswers.push(questionData[i]);
+        }
+    }
+
+    console.log(finalAnswers);
+
+    res.status(200).json({
+      teams: finalAnswers
     });
   }
 );
