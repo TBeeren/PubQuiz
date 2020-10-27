@@ -36,7 +36,7 @@ export default function SignUpForm(props)
             <h1>Sign Up!</h1>
             <form>
                 <div className="form-group center-input">
-                    <input type="teamName" value={teamName} onChange={teamNameChangeHandler} className="form-control input-width" placeholder="Team name"/>
+                    <input type="teamName" value={teamName} maxLength={8} onChange={teamNameChangeHandler} className="form-control input-width" placeholder="Team name"/>
                 </div>
                 <div className="form-group center-input">
                     <input type="roomId" value={roomId} onChange={roomIdChangeHandler} className="form-control input-width" placeholder="Room ID" />
