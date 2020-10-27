@@ -12,6 +12,15 @@ const Game = mongoose.model("Game");
 //TeamApp signing up with room id
 teamRouter.post("/api/v1/games/:roomID/teams", (req, res) => {
   console.log("TeamApp signing up with room id", req.body);
+
+  if(req.params.roomID.length === 0 || 
+    req.body.name.length === 0 || 
+    req.body.name.length > 8 || 
+    !req.params.roomID ||
+    !req.body.name){
+    res.status(400).json('Bad Request');
+  }
+
   Game.update(
     {
       roomId: req.params.roomID,

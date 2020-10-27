@@ -200,6 +200,10 @@ roundRouter.put("/api/v1/games/:roomID/round", async (req, res) => {
 
 // Quizmaster asks for all categories for the next round and update the database with scores
 roundRouter.get("/api/v1/games/:roomID/categories", async (req, res) => {
+  if(req.params.roomID.length === 0 || !req.params.roomID){
+    res.status(400).json('Bad Request');
+  }
+
   let language = await Game.find({roomId: req.params.roomID},{language: 1});
   language = language[0].language;
   Question.find({language: language})
@@ -217,6 +221,11 @@ roundRouter.get("/api/v1/games/:roomID/categories", async (req, res) => {
 // Fetching all questions based on the category
 roundRouter.get("/api/v1/games/:roomID/:round/questions", async (req, res) => {
   let categoriesList = [];
+
+  if(req.params.roomID.length === 0 || 
+    !req.params.roomID){
+    res.status(400).json('Bad Request');
+  }
 
   // Find round of team by roomID
   await Game.find(
