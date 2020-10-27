@@ -21,6 +21,10 @@ questionRouter.post(
     }).exec();
     let isCorrect = req.body.answer == question.answer;
 
+    if(!req.body.answer){
+      return;
+    }
+
     await Game.findOneAndUpdate(
       {
         roomId: req.params.roomId,

@@ -1,4 +1,4 @@
-const applicationHost = "http://localhost:3001";
+const applicationHost = "http://localhost:3010";
 
 export function NextQuestionAction(question) {
   return {

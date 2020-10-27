@@ -20,6 +20,7 @@ export default function SignUpForm(props)
     }
 
     const submitHandler = (event) =>{
+        props.audioCallback();
         dispatch(roomIdAction(roomId));
         dispatch(fetchScores(roomId));
         openSocket(store, props.history, roomId);

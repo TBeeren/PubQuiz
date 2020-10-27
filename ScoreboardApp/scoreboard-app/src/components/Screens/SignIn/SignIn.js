@@ -8,7 +8,7 @@ export default function SignIn(props)
     return(
         <div id="signUpScreen">
             <FrontPageBanner />
-            <SignInForm history={props.history}/>
+            <SignInForm history={props.history} audioCallback={props.audioCallback}/>
         </div>
     )
 }

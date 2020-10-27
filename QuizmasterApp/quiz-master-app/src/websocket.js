@@ -2,7 +2,7 @@ import { fetchTeam } from "./actions/QuizActions";
 import {fetchTeamAnswers} from "./actions/AnswerActions"
 import {fetchScores} from "./actions/TeamActions"
 
-const websocketAddress = "ws://localhost:3001/websocket";
+const websocketAddress = "ws://localhost:3010/websocket";
 let ws;
 let globalStore;
 

@@ -2,7 +2,7 @@ import { fetchNewQuestion, validateAnswer} from "./actions/QuestionActions"
 import {fetchScores} from "./actions/ScoreActions"
 
 
-const websocketAddress = "ws://localhost:3001/websocket"
+const websocketAddress = "ws://localhost:3010/websocket"
 let ws;
 let globalStore;
 

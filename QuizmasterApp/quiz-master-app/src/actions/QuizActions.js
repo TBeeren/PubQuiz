@@ -1,6 +1,6 @@
 import { openSocket } from '../websocket';
 
-const applicationHost = "http://localhost:3001";
+const applicationHost = "http://localhost:3010";
 
 export function CreateQuizAction(quizInfo) {
     return {

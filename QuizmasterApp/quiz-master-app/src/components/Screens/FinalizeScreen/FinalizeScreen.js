@@ -16,7 +16,7 @@ import "./FinalizeScreen.css";
 function FinalizeScreen() {
   const roomId = useSelector(state => state.quizInfo.roomId)
   const [endQuiz, setEndQuiz] = useState(false);
-  const applicationHost = "http://localhost:3001";
+  const applicationHost = "http://localhost:3010";
   let buttonHtml = "";
 
   const onSelect = (endQuiz) => {

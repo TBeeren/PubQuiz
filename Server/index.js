@@ -70,9 +70,9 @@ webSocketServer.on('connection', (websocket) => {
 });
 
 httpServer.on('request', app);
-httpServer.listen(3001, () => {
+httpServer.listen(3010, () => {
     mongoose.connect(`mongodb://localhost:27017/${dbName}`,  {useNewUrlParser: true }, () => {
-        console.log(`HTTP server started on port: 3001`);
+        console.log(`HTTP server started on port: 3010`);
     });
 });
 
