@@ -9,7 +9,6 @@ import './Question.css'
 
 export default function Question(props)
 {
-    // const teamName = useSelector(state => state.signUpInfo.teamName);
     return(
         <div id="question">
                 <Score />

@@ -12,6 +12,10 @@ export default function RoundReducer(state = initialState, action)
                 roundNumber: action.payload
             }
         }
+        case "RESET":
+            {
+                return(initialState);
+            }
         default:
             return state;
     }

@@ -23,6 +23,10 @@ export default function SignUpReducer(state = initialState, action)
                     isStarted: true
                 })
             }
+        case "RESET":
+            {
+                return(initialState);
+            }
         default:
             return state;
     }

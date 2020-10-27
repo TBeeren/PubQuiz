@@ -1,5 +1,11 @@
 const applicationHost = "http://localhost:3001";
 
+export function resetGameAction(){
+    return({
+        type: "RESET"
+    })
+}
+
 function signUpAction(teamName, roomId)
 {
     return({

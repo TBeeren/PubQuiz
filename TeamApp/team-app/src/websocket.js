@@ -31,6 +31,7 @@ export function openSocket(store, history ,teamName, roomId) {
             }
         case "VALIDATE_ANSWER":
             {
+                console.log("VALIDATE_ANSWER", data.questionId);
                 store.dispatch(validateAnswer(store.getState().signUpInfo.roomId, 
                                                 store.getState().questionInfo.questionId, 
                                                 store.getState().signUpInfo.teamName));

@@ -27,6 +27,10 @@ export default function ScoreReducer(state = initialState, action)
                     teamScore: (state.teamScore + action.payload)
                 })
             }
+        case "RESET":
+            {
+                return(initialState);
+            }
         default:
             return state;
     }
