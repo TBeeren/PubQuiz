@@ -10,8 +10,20 @@ require("../models/game");
 const Game = mongoose.model("Game");
 
 //TeamApp signing up with room id
-teamRouter.post("/api/v1/games/:roomID/teams", (req, res) => {
+teamRouter.post("/api/v1/games/:roomID/teams", async (req, res) => {
   console.log("TeamApp signing up with room id", req.body);
+
+  let teams = await Game.findOne({roomId: req.params.roomID}, {teams: 1});
+  teams = teams.teams;
+  console.log(teams);
+  teams.forEach((team) => {
+    if(team.name === req.body.name)
+    {
+      res.status(409).json({message: "NAME_IN_USE"});
+      return;
+    }
+  });
+
   Game.update(
     {
       roomId: req.params.roomID,

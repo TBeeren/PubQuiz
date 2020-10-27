@@ -6,7 +6,6 @@ import {signUp} from '../../actions/SignUpActions'
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './SignUpForm.css'
-import {openSocket} from '../../websocket';
 
 export default function SignUpForm(props)
 {
@@ -27,8 +26,7 @@ export default function SignUpForm(props)
 
     const submitHandler = (event) =>
     {
-        dispatch(signUp(teamName, roomId));
-        openSocket(store, props.history, teamName, roomId);
+        dispatch(signUp(store, props.history, teamName, roomId));
     }
 
     return(

@@ -15,7 +15,7 @@ function App() {
         <Route path="/answered" render={(routerProps) => <Answer history={routerProps.history} />} />
         <Route path="/question" render={()=> <Question />}/>
         <Route path="/waiting" render={(routerProps) => <Waiting history={routerProps.history}/>} />
-        <Route path="/" render={(routerProps)=> <SignUp history={routerProps.history}/>}/>
+        <Route path="/" render={(routerProps)=> <SignUp location={routerProps.location} history={routerProps.history}/>}/>
       </Switch>
     </div>
   );

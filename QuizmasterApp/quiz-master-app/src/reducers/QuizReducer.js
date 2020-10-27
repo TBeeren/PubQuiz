@@ -11,6 +11,7 @@ export default function QuizReducer(state = initialState, action) {
     case "CREATE_QUIZ": {
       return {
         ...state,
+        teamNames: [null],
         quizName: action.payload.quizName,
         roomId: action.payload.roomId,
       };

@@ -1,7 +1,8 @@
 const initialState = {
     teamName: null,
     roomId: null,
-    isStarted: false
+    isStarted: false,
+    invalidName: false
 }
 
 export default function SignUpReducer(state = initialState, action)
@@ -25,7 +26,17 @@ export default function SignUpReducer(state = initialState, action)
             }
         case "RESET":
             {
-                return(initialState);
+                return({
+                    ...initialState,
+                    invalidName: state.invalidName
+                });
+            }
+        case "INVALID_NAME":
+            {
+                return({
+                    ...state,
+                    invalidName: action.payload
+                })
             }
         default:
             return state;
