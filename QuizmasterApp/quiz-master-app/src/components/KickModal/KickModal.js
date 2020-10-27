@@ -11,7 +11,8 @@ import "./KickModal.css";
 function KickModal(props) {
   return (
     <Modal
-      {...props}
+      show={props.show}
+      onHide={props.onHide}
       size="md"
       aria-labelledby="contained-modal-title-vcenter"
       centered

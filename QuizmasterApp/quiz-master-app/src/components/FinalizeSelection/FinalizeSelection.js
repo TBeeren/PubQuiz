@@ -1,22 +1,18 @@
 // React
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-
-// Components
-import { addQuestionAction } from "../../actions/QuestionActions";
 
 // Artifacts
 import "bootstrap/dist/css/bootstrap.min.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
 // Css
 import "./FinalizeSelection.css";
 
 function FinalizeSelection(props) {
   const nSelections = 2;
-  const questions = ["Start new round", "End Quiz"];
+  let questions = ["Start new round", "End Quiz"];
   const [buttons, setButtons] = useState([false, false]);
-  const dispatch = useDispatch();
+  questions = questions.filter((question, i) => {
+    return (question !== null && i < nSelections);
+  });
 
   useEffect(() => {
     for (var i = 0; i < buttons.length; i++) {
@@ -27,10 +23,7 @@ function FinalizeSelection(props) {
           document.getElementById(i).classList.remove("selected");
         }
       } catch (e) {
-        // Only for development purposes.
-        // console.log(
-        //   "Warning! The application requires 5 selections in the list"
-        // );
+
       }
     }
   });
@@ -54,9 +47,9 @@ function FinalizeSelection(props) {
     <div className="div-content d-flex justify-content-center">
       <div className="row">
         {questions.map(function (item, i) {
-          if (item !== null && i < nSelections) {
             return (
               <button
+                key={i}
                 id={i}
                 type="button"
                 className="btn selection-color btn-circle btn-circle-size"
@@ -65,7 +58,6 @@ function FinalizeSelection(props) {
                 {item}
               </button>
             );
-          }
         })}
       </div>
     </div>

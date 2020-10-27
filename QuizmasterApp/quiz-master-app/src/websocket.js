@@ -4,11 +4,10 @@ import {fetchScores} from "./actions/TeamActions"
 
 const websocketAddress = "ws://localhost:3001/websocket";
 let ws;
-let store;
-let roomId;
+let globalStore;
 
 export function openSocket(store) {
-  store = store;
+  globalStore = store;
   ws = new WebSocket(websocketAddress);
 
   ws.onopen = function (message) {
@@ -22,12 +21,12 @@ export function openSocket(store) {
     switch (data.type) {
       case "FETCH_ANSWERS": {
         console.log("FETCH_ANSWERS");
-        store.dispatch(fetchTeamAnswers(store.getState().quizInfo.roomId, store.getState().question.questionNumber));
+        globalStore.dispatch(fetchTeamAnswers(globalStore.getState().quizInfo.roomId, globalStore.getState().question.questionNumber));
         break;
       }
       case "FETCH_TEAMS": {
         console.log("FETCH_TEAMS");
-        store.dispatch(fetchTeam(store.getState().quizInfo.roomId));
+        globalStore.dispatch(fetchTeam(globalStore.getState().quizInfo.roomId));
         break;
       }
       case "FETCH_CATEGORIES": {
@@ -40,7 +39,8 @@ export function openSocket(store) {
       }
       case "FETCH_SCORES": {
         console.log("Fetch scores jongeuhsdf");
-        store.dispatch(fetchScores(store.getState().quizInfo.roomId));
+        globalStore.dispatch(fetchScores(globalStore.getState().quizInfo.roomId));
+        break;
       }
       default: {
         console.log("Unexpected message received through ws");
@@ -53,7 +53,6 @@ export function openSocket(store) {
 
 export function identify(roomId)
 {
-  roomId = roomId;
   ws.send(
     JSON.stringify({
       type: "IDENTIFY",

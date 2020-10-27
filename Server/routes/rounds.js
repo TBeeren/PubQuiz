@@ -263,7 +263,9 @@ roundRouter.get("/api/v1/games/:roomID/:round/questions", async (req, res) => {
         $or: [
           { category: categoriesList[0] },
           { category: categoriesList[1] },
-          { category: categoriesList[2] },
+          { category: categoriesList[2] }, 
+          { category: categoriesList[3] },
+          { category: categoriesList[4] },
         ],
         _id: { $nin: answeredQuestions },
         language: language

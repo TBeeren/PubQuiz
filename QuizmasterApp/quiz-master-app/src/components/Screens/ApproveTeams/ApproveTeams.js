@@ -1,6 +1,6 @@
 //React
-import React, { useEffect } from "react";
-import { useSelector, useDispatch, useStore} from 'react-redux'
+import React from "react";
+import { useSelector, useDispatch} from 'react-redux'
 
 // Components
 import TeamApproveList from "../../TeamApproveList/TeamApproveList";
@@ -23,10 +23,6 @@ function ApproveTeams() {
   const onStartQuiz = () => {
     dispatch(startQuiz(roomId, true));
   }; 
-
-  const onStopQuiz = () => {
-    dispatch(startQuiz(roomId, false));
-  };
   
   return (
     <div>

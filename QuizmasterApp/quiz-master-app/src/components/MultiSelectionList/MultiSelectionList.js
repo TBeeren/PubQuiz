@@ -13,7 +13,10 @@ import "./MultiSelectionList.css";
 
 function MultiSelectionList(props) {
   const nSelections = 5;
-  const categories = useSelector((state) => state.quizInfo.categories);
+  let categories = useSelector((state) => state.quizInfo.categories);
+  categories = categories.filter((category, i) => {
+    return (category !== null && i < nSelections);
+  });
 
   useEffect(() => {
     for (var i = 0; i < nSelections; i++) {
@@ -43,7 +46,6 @@ function MultiSelectionList(props) {
   return (
     <div className="container mt-5">
       {categories.map(function (item, i) {
-        if (item !== null && i < nSelections) {
           return (
             <Selection
               callback={clickHandler}
@@ -52,7 +54,6 @@ function MultiSelectionList(props) {
               value={item}
             ></Selection>
           );
-        }
       })}
     </div>
   );

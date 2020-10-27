@@ -1,12 +1,11 @@
 //React
 import React, { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 // Components
 import QuizInformation from "../../QuizInformation/QuizInformation";
 import FinalizeSelection from "../../FinalizeSelection/FinalizeSelection";
 import NavButtons from "../../NavButtons/NavButtons";
-import { fetchScores } from "../../../actions/TeamActions"
 
 // Artifacts
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -19,14 +18,12 @@ function FinalizeScreen() {
   const [endQuiz, setEndQuiz] = useState(false);
   const applicationHost = "http://localhost:3001";
   let buttonHtml = "";
-  const dispatch = useDispatch();
 
   const onSelect = (endQuiz) => {
     setEndQuiz(endQuiz);
   };
 
   const updateScores = async () => {
-    console.log("Lekker aan het callen naar de api");
     await fetch(
       `${applicationHost}/api/v1/games/${roomId}/round`,
       {

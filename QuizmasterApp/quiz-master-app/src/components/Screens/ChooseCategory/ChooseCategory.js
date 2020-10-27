@@ -39,9 +39,10 @@ function ChooseCategory() {
   };
 
   useEffect(() => {
-    dispatch(UpdateQuestionAction(10));
+    //DIKKE VETTE TODO
+    dispatch(UpdateQuestionAction(11));
     dispatch(fetchCategories(roomId));
-  }, [false]);
+  }, [dispatch, roomId]);
 
   return (
     <div>

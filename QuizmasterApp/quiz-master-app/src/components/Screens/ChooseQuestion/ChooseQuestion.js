@@ -1,5 +1,5 @@
 //React
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 // Components
@@ -21,7 +21,6 @@ import "./ChooseQuestion.css";
 function ChooseQuestion() {
   const questionId = useSelector((state) => state.question.questionNumber);
   const roomId = useSelector((state) => state.quizInfo.roomId);
-  const question = useSelector((state) => state.question.question);
   const questionCounter = useSelector((state) => state.round.questionNumber);
   const roundNumber = useSelector((state) => state.round.roundNumber);
   const dispatch = useDispatch();
@@ -36,7 +35,7 @@ function ChooseQuestion() {
     {
       dispatch(fetchQuestions(roomId, roundNumber));
     }
-  },[roundNumber]);
+  },[dispatch, roomId, roundNumber]);
 
   return (
     <div>

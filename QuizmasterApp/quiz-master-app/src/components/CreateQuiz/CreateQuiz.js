@@ -44,7 +44,7 @@ function CreateQuiz() {
             onChange={inputHandler}
           />
           <select value={language} onChange={handleLanguageChange} name="language" className="form-control form-size mb-5 align-middle" id="language-selector">
-            <option selected value="Dutch">Dutch</option>
+            <option value="Dutch">Dutch</option>
             <option value="English">English</option>
           </select>
           <Link

@@ -13,7 +13,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./Question.css";
 
 function Question() {
-  const questionNumber = useSelector((state) => state.question.questionNumber);
   const questionCounter = useSelector((state) => state.round.questionNumber);
   const roomId = useSelector((state) => state.quizInfo.roomId);
   const question = useSelector((state) => state.question.question);

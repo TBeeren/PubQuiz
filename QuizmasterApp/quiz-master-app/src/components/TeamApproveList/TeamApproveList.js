@@ -12,21 +12,22 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./TeamApproveList.css";
 
 function TeamApproveList() {
-  const teams = useSelector((state) => state.quizInfo.teamNames);
+  let teams = useSelector((state) => state.quizInfo.teamNames);
+  teams = teams.filter(function (item) {
+    return (item !== null);
+  })
 
   return (
     <div>
       <div className="div-content d-flex justify-content-center">
         <div className="row">
           {teams.map(function (item, i) {
-            if (item !== null) {
               return (
                 <TeamApproveIcon
                   key={i}
                   name={item}
                 ></TeamApproveIcon>
               );
-            }
           })}
         </div>
       </div>

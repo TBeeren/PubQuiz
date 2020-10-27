@@ -15,9 +15,13 @@ import "./SingleSelectionList.css";
 
 function SingleSelectionList(props) {
   const nSelections = 5;
-  const questions = useSelector((state) => state.question.questions);
+  let questions = useSelector((state) => state.question.questions);
   const [buttons, setButtons] = useState([false, false, false, false, false]);
   const dispatch = useDispatch();
+
+  questions = questions.filter((question, i) => {
+    return (question !== null && i < nSelections);
+  });
 
   useEffect(() => {
     for (var i = 0; i < buttons.length; i++) {
@@ -53,7 +57,6 @@ function SingleSelectionList(props) {
   return (
     <div className="container mt-5">
       {questions.map(function (item, i) {
-        if (item !== null && i < nSelections) {
           return (
             <Selection
               callback={clickHandler}
@@ -62,7 +65,6 @@ function SingleSelectionList(props) {
               value={item.question}
             ></Selection>
           );
-        }
       })}
     </div>
   );
