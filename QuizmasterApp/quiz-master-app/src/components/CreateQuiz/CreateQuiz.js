@@ -14,6 +14,7 @@ import "./CreateQuiz.css";
 
 function CreateQuiz() {
   const [quizName, setQuizName] = useState("");
+  const [language, setLanguage] = useState("Dutch");
   const dispatch = useDispatch();
   const store = useStore();
 
@@ -23,8 +24,12 @@ function CreateQuiz() {
 
   const submitHandler = (e) => {
     openSocket(store);
-    dispatch(createQuiz(quizName));
+    dispatch(createQuiz(quizName, language));
   };
+
+  const handleLanguageChange = (event) => {
+    setLanguage(event.target.value);
+  }
 
   return (
     <div className="d-flex justify-content-center align-center">
@@ -38,6 +43,10 @@ function CreateQuiz() {
             value={quizName}
             onChange={inputHandler}
           />
+          <select value={language} onChange={handleLanguageChange} name="language" className="form-control form-size mb-5 align-middle" id="language-selector">
+            <option selected value="Dutch">Dutch</option>
+            <option value="English">English</option>
+          </select>
           <Link
             to="/approve-teams"
             className="d-flex justify-content-center mb-5"

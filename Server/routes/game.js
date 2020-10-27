@@ -31,6 +31,7 @@ gameRouter.post("/api/v1/games", (req, res) => {
     _id: ObjectID(),
     roomId: roomId,
     name: req.body.name,
+    language: req.body.language,
     isStarted: false,
   })
     .then((_) => {

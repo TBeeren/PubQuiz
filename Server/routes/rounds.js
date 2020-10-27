@@ -204,7 +204,9 @@ roundRouter.put("/api/v1/games/:roomID/round", async (req, res) => {
 
 // Quizmaster asks for all categories for the next round and update the database with scores
 roundRouter.get("/api/v1/games/:roomID/categories", async (req, res) => {
-  Question.find()
+  let language = await Game.find({roomId: req.params.roomID},{language: 1});
+  language = language[0].language;
+  Question.find({language: language})
     .distinct("category")
     .then((categories) => {
       res.status(200).json(categories);
@@ -218,7 +220,6 @@ roundRouter.get("/api/v1/games/:roomID/categories", async (req, res) => {
 
 // Fetching all questions based on the category
 roundRouter.get("/api/v1/games/:roomID/:round/questions", async (req, res) => {
-  const nQuestionsToFetch = 5;
   let categoriesList = [];
   console.log("roundNumber", req.params.round);
   // Find round of team by roomID
@@ -253,8 +254,10 @@ roundRouter.get("/api/v1/games/:roomID/:round/questions", async (req, res) => {
     });
 
   // Find 5 questions based on the categories
+  let language = await Game.find({roomId: req.params.roomID},{language: 1});
+  language = language[0].language;
   Question.aggregate([
-    { $sample: { size: 200 } },
+    { $sample: { size: 300 } },
     {
       $match: {
         $or: [
@@ -263,6 +266,7 @@ roundRouter.get("/api/v1/games/:roomID/:round/questions", async (req, res) => {
           { category: categoriesList[2] },
         ],
         _id: { $nin: answeredQuestions },
+        language: language
       },
     },
   ])

@@ -35,7 +35,7 @@ async function seedQuestion() {
         return {
             ...element,
             _id: index + questionsEnglish.length,
-            language: "Nederlands"
+            language: "Dutch"
         }
     });
 

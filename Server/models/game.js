@@ -8,6 +8,9 @@ const gameSchema = new mongoose.Schema({
     roomId: {
         type: Number
     },
+    language: {
+        type: String
+    },
     name: {
         type: String
     },

@@ -88,14 +88,15 @@ export function removeTeam(roomId, teamName){
     }
 }
 
-export function createQuiz(name)
+export function createQuiz(name, language)
 {
     return async function(dispatch)
     {
         try
         {
             let body = {
-                name: name
+                name: name,
+                language: language
             }
             let response = await fetch(`${applicationHost}/api/v1/games`, {
                 method: "Post",
