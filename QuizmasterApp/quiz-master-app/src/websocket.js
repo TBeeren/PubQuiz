@@ -62,6 +62,10 @@ export function identify(roomId)
   );
 }
 
+export function closeWebSocket(){
+  ws.close();
+}
+
 export function getWebSocket() {
   if (ws) {
     return ws;

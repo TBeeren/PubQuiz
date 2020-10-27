@@ -6,8 +6,12 @@ import './AllScores.css'
 
 export default function AllScores(props)
 {
-    const teams = useSelector(state => state.teamsInfo.teams);
+    let teams = useSelector(state => state.teamsInfo.teams);
     const isStarted = useSelector(state => state.round.isStarted);
+
+    teams = teams.filter((team) => {
+        return (team.name);
+    })
 
     if(!isStarted)
     {
@@ -16,10 +20,7 @@ export default function AllScores(props)
                 <h1>Scores</h1>
                 <div id="top-other-holder">
                     {teams.map((team, index) => {
-                        if(team.name)
-                        {
-                            return (<TeamIcon key={index} name={team.name} score={team.score} placing="top-other"/>)
-                        }
+                        return (<TeamIcon key={index} name={team.name} score={team.score} placing="top-other"/>)
                     })}
                 </div>
             </div>

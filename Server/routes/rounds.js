@@ -229,10 +229,7 @@ roundRouter.get("/api/v1/games/:roomID/:round/questions", async (req, res) => {
   )
     .limit(1)
     .then((res) => {
-      console.log("Heres the error:", res[0].rounds[res[0].rounds.length - 1]);
       categoriesList = res[0].rounds[res[0].rounds.length - 1].categories;
-
-      console.log("Heres the error");
       roundNumber = res[0].rounds[res[0].rounds.length - 1].roundNumber;
     })
     .catch((e) => {

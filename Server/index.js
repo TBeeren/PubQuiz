@@ -55,7 +55,17 @@ webSocketServer.on('connection', (websocket) => {
     });
 
     websocket.on('close', () => {
-        console.log("Websocket connection closed");
+        console.log("Websocket connection closed to", websocket.role, " " ,  websocket.teamName ? websocket.teamName : "", "in room: ", websocket.roomId);
+        if(websocket.role === "MASTER")
+        {
+            console.log("Closing connection to clients in the room");
+            webSocketServer.clients.forEach((client) => {
+                if(client.roomId === websocket.roomId)
+                {
+                    client.close();
+                }
+            })
+        }
     })
 });
 
