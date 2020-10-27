@@ -6,11 +6,11 @@ const initialState = {
 export default function ScoreReducer(state = initialState, action)
 {
     switch (action.type) {
-        case "INCREMENT_ROUNDSCORE":
+        case "UPDATE_ROUNDSCORE":
             {
                 return({
                     ...state,
-                    roundScore: (state.roundScore + action.payload)
+                    roundScore: action.payload
                 })
             }
         case "RESET_ROUND":
@@ -20,11 +20,11 @@ export default function ScoreReducer(state = initialState, action)
                     roundScore: 0
                 })
             }
-        case "INCREMENT_SCORE":
+        case "UPDATE_SCORE":
             {
                 return({
                     ...state,
-                    teamScore: (state.teamScore + action.payload)
+                    teamScore: action.payload
                 })
             }
         case "RESET":

@@ -69,7 +69,7 @@ questionRouter.put("/api/v1/games/:roomId/questions/:questionId/answer", async (
       _id: req.params.questionId,
     }).exec();
     let isCorrect = req.body.answer == question.answer;
-//=======================================
+    
       await Game.findOneAndUpdate(
         {
           roomId: req.params.roomId,
@@ -87,7 +87,7 @@ questionRouter.put("/api/v1/games/:roomId/questions/:questionId/answer", async (
           ],
         }
       );
-//========================================
+
     ws.getWebSocketServer().clients.forEach((client) => {
       if(client.roomId === req.params.roomId)
       {

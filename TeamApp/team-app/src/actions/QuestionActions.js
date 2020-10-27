@@ -1,5 +1,3 @@
-import {incrementRoundScoreAction} from './ScoreActions'
-
 const applicationHost = "http://localhost:3001";
 
 export function AnswerChangeAction(answer)
@@ -113,10 +111,6 @@ export function validateAnswer(roomId, questionId, teamName)
             let response = await fetch(`${applicationHost}/api/v1/games/${roomId}/questions/${questionId}/answers/${teamName}`);
             response = await response.json();
             dispatch(AnswerReceivedAction(response.answer, response.isCorrect));
-            if(response.isCorrect)
-            {
-                dispatch(incrementRoundScoreAction(1));
-            }
         }
         catch(error)
         {

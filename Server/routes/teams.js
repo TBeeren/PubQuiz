@@ -107,6 +107,22 @@ teamRouter.get("/api/v1/games/:roomID/teams", (req, res) => {
   });
 });
 
+//Team requesting own score
+teamRouter.get("/api/v1/games/:roomID/teams/:teamName", async (req, res) => {
+  console.log("Scoreboard/ quizmaster requesting teams and their scores");
+  let teams = await Game.find({ roomId: req.params.roomID }, { teams: 1 });
+  teams = teams[0].teams;
+  console.log("TEAMETMAMTMAETMAETMA", teams);
+  let selectedTeam;
+  teams.forEach((team) => {
+    if(team.name === req.params.teamName)
+    {
+      selectedTeam = team;
+    }
+  })
+  res.status(200).json(selectedTeam);
+});
+
 //Quizmaster kicking a team
 teamRouter.delete("/api/v1/games/:roomID/teams/:teamID", (req, res) => {
   try {

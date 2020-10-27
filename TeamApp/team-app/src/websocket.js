@@ -1,4 +1,6 @@
 import { fetchNewQuestion, validateAnswer} from "./actions/QuestionActions"
+import {fetchScores} from "./actions/ScoreActions"
+
 
 const websocketAddress = "ws://localhost:3001/websocket"
 let ws;
@@ -37,6 +39,13 @@ export function openSocket(store, history ,teamName, roomId) {
                                                 store.getState().signUpInfo.teamName));
                 break;
             }
+        case "FETCH_SCORES":
+          {
+              console.log("FETCH_SCORES", data.questionId);
+              store.dispatch(fetchScores(store.getState().signUpInfo.roomId,
+                                          store.getState().signUpInfo.teamName));
+              break;
+          }
         default:
             {
                 console.log("Unexpected message received through ws");

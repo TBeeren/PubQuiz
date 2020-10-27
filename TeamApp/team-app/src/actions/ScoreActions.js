@@ -1,9 +1,9 @@
 const applicationHost = "http://localhost:3001";
 
-export function incrementRoundScoreAction(value)
+export function updateRoundScoreAction(value)
 {
     return {
-        type: "INCREMENT_ROUNDSCORE",
+        type: "UPDATE_ROUNDSCORE",
         payload: value
     }
 }
@@ -15,10 +15,29 @@ export function resetRoundAction()
     }
 }  
 
-export function incrementScoreAction(value)
+export function updateScoreAction(value)
 {
     return {
-        type: "INCREMENT_SCORE",
+        type: "UPDATE_SCORE",
         payload: value
     }
 }  
+
+export function fetchScores(roomId, teamName)
+{
+    return async function(dispatch)
+    {
+        try
+        {
+            let response = await fetch(`${applicationHost}/api/v1/games/${roomId}/teams/${teamName}`);
+            response = await response.json();
+            console.log("ff wat erbij zetten", response);
+            dispatch(updateScoreAction(response.score));
+            dispatch(updateRoundScoreAction(response.roundScore));
+        }
+        catch(error)
+        {
+            console.log(error);
+        }
+    }
+}

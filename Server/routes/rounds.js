@@ -47,6 +47,11 @@ roundRouter.post("/api/v1/games/:roomID/round", async (req, res) => {
                 type: "VALIDATE_ANSWER",
               })
             );
+            client.send(
+              JSON.stringify({
+                type: "FETCH_SCORES"
+              })
+            );
           }
         }
         if (client.role === "SCOREBOARD") {
@@ -188,13 +193,11 @@ roundRouter.put("/api/v1/games/:roomID/round", async (req, res) => {
   
   ws.getWebSocketServer().clients.forEach((client) => {
   if (client.roomId === req.params.roomID) {
-    if (client.role === "SCOREBOARD" || client.role === "MASTER") {
-      client.send(
-        JSON.stringify({
-          type: "FETCH_SCORES",
-        })
-      );
-    }
+    client.send(
+      JSON.stringify({
+        type: "FETCH_SCORES",
+      })
+    );
   }
   })
 });
