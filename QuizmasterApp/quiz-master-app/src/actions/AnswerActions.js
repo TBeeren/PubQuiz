@@ -65,7 +65,6 @@ export function fetchTeamAnswers(roomId, questionId)
         try{
             let response = await fetch(`${applicationHost}/api/v1/games/${roomId}/questions/${questionId}/answers`);
             response = await response.json();
-            console.log(response.teams);
             dispatch(teamAnsweredAction(response.teams));
         }
         catch(error)
