@@ -32,7 +32,10 @@ function ChooseQuestion() {
   }
 
   useEffect(() => {
-    dispatch(fetchQuestions(roomId, roundNumber));
+    if(roundNumber)
+    {
+      dispatch(fetchQuestions(roomId, roundNumber));
+    }
   },[roundNumber]);
 
   return (

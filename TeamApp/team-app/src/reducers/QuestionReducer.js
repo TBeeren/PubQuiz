@@ -57,6 +57,10 @@ export default function QuestionInfoReducer(state = initialState, action)
                     isResubmit: action.payload
                 }
             }
+        case "RESET":
+            {
+                return(initialState);
+            }
         default:
             return state;
     }

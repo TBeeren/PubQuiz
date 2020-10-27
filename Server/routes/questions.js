@@ -40,6 +40,57 @@ questionRouter.post(
       );
 
       ws.getWebSocketServer().clients.forEach((client) => {
+        if(client.roomId === req.params.roomId)
+        {
+          if (client.role === "SCOREBOARD") {
+            client.send(
+              JSON.stringify({
+                type: "FETCH_ANSWERED_TEAMS"
+              })
+            );
+          }
+          if (client.role === "MASTER") {
+            client.send(
+              JSON.stringify({
+                type: "FETCH_ANSWERS"
+              })
+            );
+          }
+        }
+      });
+    res.status(201).json({});
+});
+
+//TeamApp resubmitting answer to a question
+questionRouter.put("/api/v1/games/:roomId/questions/:questionId/answer", async (req, res) => {
+    console.log("team updating an answer", req.body);
+
+    let question = await Question.findOne({
+      _id: req.params.questionId,
+    }).exec();
+    let isCorrect = req.body.answer == question.answer;
+//=======================================
+      await Game.findOneAndUpdate(
+        {
+          roomId: req.params.roomId,
+        },
+        {
+          $set: {
+            "questions.$[inner].answers.$[innerInner].text": req.body.answer,
+            "questions.$[inner].answers.$[innerInner].isCorrect": isCorrect
+          },
+        },
+        {
+          arrayFilters: [
+            { "inner.question": req.params.questionId },
+            { "innerInner.teamName": req.body.teamName },
+          ],
+        }
+      );
+//========================================
+    ws.getWebSocketServer().clients.forEach((client) => {
+      if(client.roomId === req.params.roomId)
+      {
         if (client.role === "SCOREBOARD") {
           client.send(
             JSON.stringify({
@@ -54,13 +105,8 @@ questionRouter.post(
             })
           );
         }
-      });
-    res.status(201).json({});
-});
-
-//TeamApp resubmitting answer to a question
-questionRouter.put("/api/v1/games/:roomId/questions/:questionId/answer", (req, res) => {
-    console.log("team updating an answer", req.body);
+      }
+    });
 });
 
 //TeamApp requesting the next question

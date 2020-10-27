@@ -49,7 +49,7 @@ function teamAnsweredAction(teams)
         return {
             teamName: team.teamName, 
             value: team.text, 
-            correctness: team.correctness
+            correctness: team.isCorrect
         }
     })
     return {
