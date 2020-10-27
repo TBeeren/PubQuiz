@@ -48,7 +48,7 @@ function ChooseCategory() {
     <div>
       <QuizInformation
         title="Choose Categories"
-        description="Select three categories"
+        description="Select one or multiple categories"
       ></QuizInformation>
       <MultiSelectionList
         buttons={buttons}

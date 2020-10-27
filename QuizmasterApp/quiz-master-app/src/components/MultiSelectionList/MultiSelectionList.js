@@ -15,24 +15,10 @@ function MultiSelectionList(props) {
   const nSelections = 5;
   let categories = useSelector((state) => state.quizInfo.categories);
 
-  const shuffleArray = (array) => {
-    var currentIndex = array.length, temporaryValue, randomIndex;
-    while (0 !== currentIndex) {
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex -= 1;
-      temporaryValue = array[currentIndex];
-      array[currentIndex] = array[randomIndex];
-      array[randomIndex] = temporaryValue;
-    }
-    return array;
-  }
-
   categories = categories.filter((category, i) => {
     return (category !== null && i < nSelections);
   });
-
-  shuffleArray(categories);
-
+  
   useEffect(() => {
     for (var i = 0; i < nSelections; i++) {
       try {
