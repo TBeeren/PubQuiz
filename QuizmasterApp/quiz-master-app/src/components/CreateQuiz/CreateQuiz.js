@@ -2,7 +2,6 @@
 import React, { useState } from "react";
 import { useDispatch, useStore } from "react-redux";
 import { Link } from "react-router-dom";
-import { openSocket } from '../../websocket';
 
 import { createQuiz } from "../../actions/QuizActions";
 
@@ -12,7 +11,7 @@ import { createQuiz } from "../../actions/QuizActions";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./CreateQuiz.css";
 
-function CreateQuiz() {
+function CreateQuiz(props) {
   const [quizName, setQuizName] = useState("");
   const [language, setLanguage] = useState("Dutch");
   const dispatch = useDispatch();
@@ -23,8 +22,7 @@ function CreateQuiz() {
   };
 
   const submitHandler = (e) => {
-    openSocket(store);
-    dispatch(createQuiz(quizName, language));
+    dispatch(createQuiz(store, props.history, quizName, language)); 
   };
 
   const handleLanguageChange = (event) => {

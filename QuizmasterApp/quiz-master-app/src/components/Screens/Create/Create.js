@@ -12,10 +12,13 @@ import "./Create.css";
 function Create(props) {
   return (
     <div id="createScreen">
-      <FrontPageBanner></FrontPageBanner>
-      <CreateQuiz></CreateQuiz>
+    <FrontPageBanner></FrontPageBanner>
+    <CreateQuiz 
+    history={props.history}
+    ></CreateQuiz>
     </div>
-  );
-}
-
-export default Create;
+    );
+  }
+  
+  export default Create;
+  

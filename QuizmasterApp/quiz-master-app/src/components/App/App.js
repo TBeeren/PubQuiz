@@ -19,13 +19,13 @@ function App() {
   return (
     <Router>
       <Switch>
-        <Route exact path="/approve-teams" component={ApproveTeams}/>
-        <Route exact path="/select-categories" component={ChooseCategory}/>
-        <Route exact path="/select-question" component={ChooseQuestion}/>
-        <Route exact path="/question/:questionNumber" component={Question}/>
-        <Route exact path="/finalize" component={FinalizeScreen}/>
-        <Route exact path="/victory" component={VictoryScreen}/>
-        <Route path="/" component={Create}/>
+        <Route exact path="/approve-teams" render={() => <ApproveTeams/>}/>
+        <Route exact path="/select-categories" render={() => <ChooseCategory/>}/>
+        <Route exact path="/select-question" render={() => <ChooseQuestion/>}/>
+        <Route exact path="/question/:questionNumber" render={() => <Question/>}/>
+        <Route exact path="/finalize" render={() => <FinalizeScreen/>}/>
+        <Route exact path="/victory" render={() => <VictoryScreen/>}/>
+        <Route path="/" render={(routeProps) => <Create history={routeProps.history}/>}/>
       </Switch>
     </Router>
   );

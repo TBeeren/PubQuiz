@@ -6,18 +6,23 @@ const websocketAddress = "ws://localhost:3001/websocket";
 let ws;
 let globalStore;
 
-export function openSocket(store) {
+export function openSocket(store, history) {
   globalStore = store;
   ws = new WebSocket(websocketAddress);
-
+  
+  ws.onclose = function(message) {
+    history.push("/");
+  };
+  
   ws.onopen = function (message) {
+    identify(globalStore.getState().quizInfo.roomId)
     console.log("Websocket Connection opened");
   };
-
+  
   ws.onmessage = function (message) {
     const data = JSON.parse(message.data);
     console.log("ws onmessage: ", data);
-
+    
     switch (data.type) {
       case "FETCH_ANSWERS": {
         globalStore.dispatch(fetchTeamAnswers(globalStore.getState().quizInfo.roomId, globalStore.getState().question.questionNumber));
@@ -36,21 +41,20 @@ export function openSocket(store) {
       }
     }
   };
-
+  
   return ws;
 }
 
-export function identify(roomId)
-{
-  ws.send(
-    JSON.stringify({
-      type: "IDENTIFY",
-      roomId: roomId,
-      role: "MASTER",
-    })
+export async function identify(roomId){
+ws.send(
+  JSON.stringify({
+    type: "IDENTIFY",
+    roomId: roomId,
+    role: "MASTER",
+  })
   );
 }
-
+  
 export function closeWebSocket(){
   ws.close();
 }
@@ -62,3 +66,4 @@ export function getWebSocket() {
     throw new Error("The websocket has not been opened yet.");
   }
 }
+  

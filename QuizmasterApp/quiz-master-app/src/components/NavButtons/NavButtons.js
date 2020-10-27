@@ -4,6 +4,7 @@ import React, {useState} from "react";
 // Component
 import NavButton from "../NavButton/NavButton";
 import CustomModal from "../CustomModal/CustomModal";
+import { closeWebSocket }  from "../../websocket"
 
 // Artifacts
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -19,7 +20,8 @@ function NavButtons(props) {
   if (props.returnButton === true) {
     buttonsHtml = (
       <div>
-        <div className="float-left align-bottom-left">
+        <div className="float-left align-bottom-left"
+            onClick={() => closeWebSocket()}>
           <NavButton></NavButton>
         </div>
         <div

@@ -1,4 +1,4 @@
-import { identify } from '../websocket';
+import { openSocket } from '../websocket';
 
 const applicationHost = "http://localhost:3001";
 
@@ -101,7 +101,7 @@ export function removeTeam(roomId, teamName){
     }
 }
 
-export function createQuiz(name, language)
+export function createQuiz(store, history, name, language)
 {
     return async function(dispatch)
     {
@@ -119,7 +119,7 @@ export function createQuiz(name, language)
                 }
             });
             response = await response.json();
-            identify(response.roomId);
+            openSocket(store, history);
             dispatch(CreateQuizAction(response));
         }
         catch(error)
