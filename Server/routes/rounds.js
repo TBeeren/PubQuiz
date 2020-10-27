@@ -20,7 +20,6 @@ roundRouter.post("/api/v1/games/:roomID/round", async (req, res) => {
   try {
     if (req.body.roundProgression) {
       let roomInfo = await Game.findOne({ roomId: req.params.roomID });
-      console.log("RoomInfo: ", roomInfo);
       let questionsArray = roomInfo.questions;
       let lastQuestion = questionsArray[questionsArray.length - 1];
       let answers = lastQuestion.answers;
@@ -93,7 +92,7 @@ roundRouter.post("/api/v1/games/:roomID/round", async (req, res) => {
       });
     }
   } catch (error) {
-    console.log("ERROR: ", error.message);
+    console.log(error.message);
     res.status(400).json({ message: error.message });
   }
 });
@@ -101,7 +100,6 @@ roundRouter.post("/api/v1/games/:roomID/round", async (req, res) => {
 // Quizmaster starts a new round
 roundRouter.post("/api/v1/games/:roomID/round/categories", (req, res) => {
   console.log("Quizmaster starts a new round");
-  console.log(req.body);
   Game.update(
     { roomId: req.params.roomID },
     {
@@ -112,9 +110,7 @@ roundRouter.post("/api/v1/games/:roomID/round/categories", (req, res) => {
         },
       },
     }
-  )
-    .then((_) => {
-      console.log("Round started");
+  ).then((_) => {
       res.status(200).json({
         roundNumber: req.body.roundNumber,
         categories: req.body.categories,
@@ -221,7 +217,7 @@ roundRouter.get("/api/v1/games/:roomID/categories", async (req, res) => {
 // Fetching all questions based on the category
 roundRouter.get("/api/v1/games/:roomID/:round/questions", async (req, res) => {
   let categoriesList = [];
-  console.log("roundNumber", req.params.round);
+
   // Find round of team by roomID
   await Game.find(
     { roomId: req.params.roomID },

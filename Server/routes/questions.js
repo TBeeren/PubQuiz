@@ -210,9 +210,6 @@ questionRouter.get(
           finalAnswers.push(questionData[i]);
         }
     }
-
-    console.log(finalAnswers);
-
     res.status(200).json({
       teams: finalAnswers
     });
