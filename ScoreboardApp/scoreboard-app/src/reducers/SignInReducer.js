@@ -13,6 +13,10 @@ export default function SignInReducer(state = initialState, action)
                     roomId: action.payload
                 })
             }
+        default:
+        {
+            break;
+        }
     }
     return state;
 }

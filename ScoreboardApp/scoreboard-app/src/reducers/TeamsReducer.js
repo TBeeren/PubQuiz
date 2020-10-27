@@ -11,26 +11,30 @@ export default function TeamsReducer(state = initialState, action)
     switch(action.type)
     {
         case "TEAMS_UPDATE":
-            {
-                return({
-                    ...state,
-                    teams: action.payload
-                })
-            }
+        {
+            return({
+                ...state,
+                teams: action.payload
+            })
+        }
         case "TEAM_ANSWERED":
-            {
-                return({
-                    ...state,
-                    answeredTeams: action.payload
-                })
-            }
+        {
+            return({
+                ...state,
+                answeredTeams: action.payload
+            })
+        }
         case "NEW_QUESTION":
-            {
-                return({
-                    ...state,
-                    answeredTeams: []
-                })
-            }
+        {
+            return({
+                ...state,
+                answeredTeams: []
+            })
+        }
+        default:
+        {
+            break;
+        }
     }
     return state;
 }

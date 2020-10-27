@@ -19,6 +19,10 @@ export function openSocket(store, history, roomId) {
     const data = JSON.parse(message.data);
     console.log("ws onmessage: ", data);
 
+    ws.onclose = function (message) {
+      history.push("/");
+    }
+    
     switch (data.type) {
       case "FETCH_SCORES":
           {
@@ -37,6 +41,7 @@ export function openSocket(store, history, roomId) {
       case "FETCH_ANSWERED_TEAMS":
         {
           globalStore.dispatch(fetchAnsweredTeams(globalStore.getState().signInInfo.roomId, globalStore.getState().questionInfo.questionId));
+          break;
         }
       default:
           {

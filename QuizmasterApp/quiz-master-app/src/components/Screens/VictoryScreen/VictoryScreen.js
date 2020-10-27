@@ -3,6 +3,7 @@ import TeamIcon from "../../TeamIcon/TeamIcon";
 import { useSelector } from "react-redux";
 import QuizInformation from "../../QuizInformation/QuizInformation";
 import NavButtons from "../../NavButtons/NavButtons";
+import {closeWebSocket} from '../../../websocket'
 
 import "./VictoryScreen.css";
 
@@ -70,6 +71,7 @@ export default function VictoryScreen(props) {
         title="End Quiz"
         path={"/"}
         returnButton={false}
+        callback={closeWebSocket}
       ></NavButtons>
     </div>
   );

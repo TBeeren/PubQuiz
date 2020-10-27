@@ -5,12 +5,17 @@ const initialState = {
 
 export default function RoundReducer(state = initialState, action) {
   switch (action.type) {
-    case "FETCH_ROUND": {
+    case "FETCH_ROUND": 
+    {
       return {
         ...state,
         roundNumber: action.payload,
         isStarted: true
       };
+    }
+    default:
+    {
+        break;
     }
   }
   return state;

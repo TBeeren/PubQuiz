@@ -4,10 +4,10 @@ import {fetchScores} from "./actions/ScoreActions"
 
 const websocketAddress = "ws://localhost:3001/websocket"
 let ws;
-let store;
+let globalStore;
 
 export function openSocket(store, history ,teamName, roomId) {
-  store = store;
+  globalStore = store;
   ws = new WebSocket(websocketAddress);
 
   ws.onopen = function (message) {
@@ -26,21 +26,21 @@ export function openSocket(store, history ,teamName, roomId) {
     switch (data.type) {
         case "NEXT_QUESTION":
             {
-                store.dispatch(fetchNewQuestion(store.getState().signUpInfo.roomId, data.questionId));
+                globalStore.dispatch(fetchNewQuestion(globalStore.getState().signUpInfo.roomId, data.questionId));
                 history.push("/question");
                 break;
             }
         case "VALIDATE_ANSWER":
             {
-                store.dispatch(validateAnswer(store.getState().signUpInfo.roomId, 
-                                                store.getState().questionInfo.questionId, 
-                                                store.getState().signUpInfo.teamName));
+                globalStore.dispatch(validateAnswer(globalStore.getState().signUpInfo.roomId, 
+                                                globalStore.getState().questionInfo.questionId, 
+                                                globalStore.getState().signUpInfo.teamName));
                 break;
             }
         case "FETCH_SCORES":
           {
-              store.dispatch(fetchScores(store.getState().signUpInfo.roomId,
-                                          store.getState().signUpInfo.teamName));
+              globalStore.dispatch(fetchScores(globalStore.getState().signUpInfo.roomId,
+                                          globalStore.getState().signUpInfo.teamName));
               break;
           }
         default:
