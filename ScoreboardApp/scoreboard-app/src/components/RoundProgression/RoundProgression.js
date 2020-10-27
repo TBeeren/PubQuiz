@@ -10,7 +10,6 @@ export default function RoundProgression(props) {
     (state) => state.questionInfo.questionNumber
   );
   const percentage = (100 / 12) * questionNumber;
-
   return (
     <ProgressBar
       className="bar-color"

@@ -39,6 +39,7 @@ function CreateQuiz(props) {
             id="inputQuizName"
             placeholder="Quiz Name"
             value={quizName}
+            maxLength={20}
             onChange={inputHandler}
           />
           <select value={language} onChange={handleLanguageChange} name="language" className="form-control form-size mb-5 align-middle" id="language-selector">
