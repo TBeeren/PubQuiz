@@ -79,3 +79,10 @@
     type: "FETCH_QUESTIONS"
 }
 ```
+- FETCH_SCORES
+  - Notify to fetch the scores.
+```
+{
+    type: "FETCH_SCORES"
+}
+```

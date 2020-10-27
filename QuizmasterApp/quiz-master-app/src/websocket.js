@@ -1,5 +1,6 @@
 import { fetchTeam } from "./actions/QuizActions";
 import {fetchTeamAnswers} from "./actions/AnswerActions"
+import {fetchScores} from "./actions/TeamActions"
 
 const websocketAddress = "ws://localhost:3001/websocket";
 let ws;
@@ -25,6 +26,7 @@ export function openSocket(store) {
         break;
       }
       case "FETCH_TEAMS": {
+        console.log("FETCH_TEAMS");
         store.dispatch(fetchTeam(store.getState().quizInfo.roomId));
         break;
       }
@@ -35,6 +37,10 @@ export function openSocket(store) {
       case "FETCH_QUESTIONS": {
         console.log("FETCH_QUESTIONS");
         break;
+      }
+      case "FETCH_SCORES": {
+        console.log("Fetch scores jongeuhsdf");
+        store.dispatch(fetchScores(store.getState().quizInfo.roomId));
       }
       default: {
         console.log("Unexpected message received through ws");

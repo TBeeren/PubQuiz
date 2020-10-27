@@ -5,7 +5,7 @@ const initialState = {
       categories: [],
     },
   ],
-  questionNumber: 11,
+  questionNumber: 12,
   roundNumber: 0
 };
 

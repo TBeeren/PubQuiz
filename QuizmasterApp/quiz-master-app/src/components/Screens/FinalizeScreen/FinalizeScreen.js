@@ -17,6 +17,7 @@ import "./FinalizeScreen.css";
 function FinalizeScreen() {
   const roomId = useSelector(state => state.quizInfo.roomId)
   const [endQuiz, setEndQuiz] = useState(false);
+  const applicationHost = "http://localhost:3001";
   let buttonHtml = "";
   const dispatch = useDispatch();
 
@@ -24,17 +25,26 @@ function FinalizeScreen() {
     setEndQuiz(endQuiz);
   };
 
-  const onNextPage = () => {
-    dispatch(fetchScores(roomId))
+  const updateScores = async () => {
+    console.log("Lekker aan het callen naar de api");
+    await fetch(
+      `${applicationHost}/api/v1/games/${roomId}/round`,
+      {
+        method: "Put",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
   }
 
   if (endQuiz) {
     buttonHtml = (
-      <NavButtons title="End the Quiz?" path="/victory" returnButton={false} callback={onNextPage}></NavButtons>
+      <NavButtons title="End the Quiz?" path="/victory" returnButton={false} callback={updateScores}></NavButtons>
     );
   } else {
     buttonHtml = (
-        <NavButtons title="Next Round?" path="/select-categories" returnButton={false}></NavButtons>
+        <NavButtons title="Next Round?" path="/select-categories" returnButton={false} callback={updateScores}></NavButtons>
       );
   }
 

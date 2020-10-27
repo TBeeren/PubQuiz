@@ -30,9 +30,8 @@ roundRouter.post("/api/v1/games/:roomID/round", async (req, res) => {
           await Game.findOneAndUpdate(
             { roomId: req.params.roomID },
             {
-              $inc: { "teams.$[inner].roundScore": 1 
+              $inc: { "teams.$[inner].roundScore": 1 },
             },
-          },
             {
               arrayFilters: [{ "inner.name": answer.teamName }],
             }
@@ -41,8 +40,7 @@ roundRouter.post("/api/v1/games/:roomID/round", async (req, res) => {
       }
 
       ws.getWebSocketServer().clients.forEach((client) => {
-        if(client.roomId === req.params.roomID)
-        {
+        if (client.roomId === req.params.roomID) {
           if (client.role === "TEAM") {
             client.send(
               JSON.stringify({
@@ -77,7 +75,7 @@ roundRouter.post("/api/v1/games/:roomID/round", async (req, res) => {
       });
 
       ws.getWebSocketServer().clients.forEach((client) => {
-        if(client.roomId === req.params.roomID){
+        if (client.roomId === req.params.roomID) {
           if (client.role === "TEAM" || client.role === "SCOREBOARD") {
             client.send(
               JSON.stringify({
@@ -90,7 +88,7 @@ roundRouter.post("/api/v1/games/:roomID/round", async (req, res) => {
       });
     }
   } catch (error) {
-    console.log("ERROR: ",error.message);
+    console.log("ERROR: ", error.message);
     res.status(400).json({ message: error.message });
   }
 });
@@ -109,8 +107,9 @@ roundRouter.post("/api/v1/games/:roomID/round/categories", (req, res) => {
         },
       },
     }
-  ).then((_) => {
-    console.log("Round started");
+  )
+    .then((_) => {
+      console.log("Round started");
       res.status(200).json({
         roundNumber: req.body.roundNumber,
         categories: req.body.categories,
@@ -124,65 +123,52 @@ roundRouter.post("/api/v1/games/:roomID/round/categories", (req, res) => {
 
 // Fetching the roundnumber
 roundRouter.get("/api/v1/games/:roomID/round", async (req, res) => {
-  let rounds = await Game.find({ roomId: req.params.roomID }, {rounds: 1});
+  let rounds = await Game.find({ roomId: req.params.roomID }, { rounds: 1 });
   rounds = rounds[0].rounds;
   res.status(200).json({
-    roundNumber: rounds[rounds.length - 1].roundNumber
+    roundNumber: rounds[rounds.length - 1].roundNumber,
   });
-})
+});
 
-// Quizmaster asks for all categories for the next round and update the database with scores xD
-roundRouter.get("/api/v1/games/:roomID/categories", async (req, res) => {
-  console.log("Quizmaster asks for all categories for the next round and update the database with scores xD")
-  let rounds = await Game.find({roomId: req.params.roomID}, {rounds: 1})
+// End of the round, update scores
+roundRouter.put("/api/v1/games/:roomID/round", async (req, res) => {
+  let rounds = await Game.find({ roomId: req.params.roomID }, { rounds: 1 });
   rounds = rounds[0].rounds;
-  if(rounds.length)
-  {
+  if (rounds.length) {
     let teams = await Game.find({ roomId: req.params.roomID }, { teams: 1 });
-    
     teams = teams[0].teams;
-    console.log("teams before sort", teams);
     teams.sort((teamA, teamB) => {
       return teamB.roundScore - teamA.roundScore;
-    })
-  
-    console.log("teams after sort", teams);
-  
-    for(let i = 0; i < teams.length; i++)
-    {
-      let points = 0
-      switch(i)
-      {
-        case 0:
-          {
-            points = 4;
-            break;
-          }
-        case 1:
-          {
-            points = 2;
-            break;
-          }
-        case 2:
-          {
-            points = 1;
-            break;
-          }
-        default:
-          {
-            points = 0.1;
-            break;
-          }
+    });
+
+    for (let i = 0; i < teams.length; i++) {
+      let points = 0;
+      switch (i) {
+        case 0: {
+          points = 4;
+          break;
+        }
+        case 1: {
+          points = 2;
+          break;
+        }
+        case 2: {
+          points = 1;
+          break;
+        }
+        default: {
+          points = 0.1;
+          break;
+        }
       }
-      
+
       await Game.findOneAndUpdate(
         { roomId: req.params.roomID },
         {
-          $inc: { "teams.$[inner].score": points
+          $inc: { "teams.$[inner].score": points },
         },
-      },
         {
-          arrayFilters: [{ "inner.name": teams[i].name}],
+          arrayFilters: [{ "inner.name": teams[i].name }],
         }
       );
     }
@@ -191,16 +177,30 @@ roundRouter.get("/api/v1/games/:roomID/categories", async (req, res) => {
       await Game.findOneAndUpdate(
         { roomId: req.params.roomID },
         {
-          $set: { "teams.$[inner].roundScore": 0
+          $set: { "teams.$[inner].roundScore": 0 },
         },
-      },
         {
-          arrayFilters: [{ "inner.name": team.name}],
+          arrayFilters: [{ "inner.name": team.name }],
         }
       );
-    })
+    });
   }
+  
+  ws.getWebSocketServer().clients.forEach((client) => {
+  if (client.roomId === req.params.roomID) {
+    if (client.role === "SCOREBOARD" || client.role === "MASTER") {
+      client.send(
+        JSON.stringify({
+          type: "FETCH_SCORES",
+        })
+      );
+    }
+  }
+  })
+});
 
+// Quizmaster asks for all categories for the next round and update the database with scores
+roundRouter.get("/api/v1/games/:roomID/categories", async (req, res) => {
   Question.find()
     .distinct("category")
     .then((categories) => {
@@ -210,14 +210,14 @@ roundRouter.get("/api/v1/games/:roomID/categories", async (req, res) => {
       console.log(e.message);
       res.status(404).json("Query went wrong, please try again.");
     });
-    givePoints = true;
+  givePoints = true;
 });
 
 // Fetching all questions based on the category
 roundRouter.get("/api/v1/games/:roomID/:round/questions", async (req, res) => {
   const nQuestionsToFetch = 5;
   let categoriesList = [];
-  console.log("roundNumber", req.params.round)
+  console.log("roundNumber", req.params.round);
   // Find round of team by roomID
   await Game.find(
     { roomId: req.params.roomID },
@@ -227,7 +227,7 @@ roundRouter.get("/api/v1/games/:roomID/:round/questions", async (req, res) => {
     .then((res) => {
       console.log("Heres the error:", res[0].rounds[res[0].rounds.length - 1]);
       categoriesList = res[0].rounds[res[0].rounds.length - 1].categories;
-      
+
       console.log("Heres the error");
       roundNumber = res[0].rounds[res[0].rounds.length - 1].roundNumber;
     })

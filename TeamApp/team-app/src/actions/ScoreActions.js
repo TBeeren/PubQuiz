@@ -1,3 +1,5 @@
+const applicationHost = "http://localhost:3001";
+
 export function incrementRoundScoreAction(value)
 {
     return {
