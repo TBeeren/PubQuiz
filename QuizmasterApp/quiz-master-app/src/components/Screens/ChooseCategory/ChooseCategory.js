@@ -21,12 +21,25 @@ function ChooseCategory() {
   const roomId = useSelector(state => state.quizInfo.roomId);
   const roundNumber = useSelector((state) => state.round.roundNumber);
   const path = `/select-question`;
-
   const dispatch = useDispatch();
+  let nSelected = 0;
 
   const onSetButtons = (array) => {
-    setButtons(array);
-  };
+    for(var el of array){
+      if(el){
+        nSelected++;
+      }
+    }
+    try {
+      if(!nSelected){
+        document.getElementById('NavButtons').style.display = "none";
+      } else {
+        document.getElementById('NavButtons').style.display = "inline";
+      }
+    } catch(e){
+  }
+  setButtons(array);
+}
 
   const onNewRound = () => {
     let tempArray = [];
@@ -39,6 +52,7 @@ function ChooseCategory() {
   };
 
   useEffect(() => {
+    document.getElementById('NavButtons').style.display = "none";
     dispatch(UpdateQuestionAction(0));
     dispatch(fetchCategories(roomId));
   }, [dispatch, roomId]);
@@ -54,6 +68,7 @@ function ChooseCategory() {
         onSetButtons={onSetButtons}
       ></MultiSelectionList>
       <NavButtons
+        id="NavButton"
         title="Start Questions?"
         path={path}
         returnButton={false}
