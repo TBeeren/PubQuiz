@@ -185,11 +185,11 @@ questionRouter.get(
   }
 );
 
-//QuizMaster/Scoreboard asking for answers to all questions
+//QuizMaster/Scoreboard asking for answers of all teams
 questionRouter.get(
   "/api/v1/games/:roomId/questions/:questionId/answers",
   async (req, res) => {
-    console.log("QuizMaster asking for answers to all questions");
+    console.log("QuizMaster asking for answers of all teams");
     let roomQuestions = await Game.findOne(
       {roomId: req.params.roomId},
       {questions: 1}

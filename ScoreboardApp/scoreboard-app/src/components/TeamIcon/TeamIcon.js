@@ -8,12 +8,33 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./TeamIcon.css";
 
 function TeamIcon(props) {
-  const cssClasses = `btn btn-color btn-circle btn-xl intermission-team-icon ${props.placing}`
-  return (
+  let cssClasses = `btn btn-color btn-circle btn-xl intermission-team-icon ${props.placing}`
+  let toRender;
+  if(props.answer)
+  {
+    if(props.correct)
+    {
+      cssClasses = `${cssClasses} answer-correct`;
+    }
+    else{
+      cssClasses = `${cssClasses} answer-false`;
+    }
+    toRender = (
       <button type="button" className={cssClasses}>
+          <span className="icon-team-name ">{props.name}</span>
+          <span className="icon-score">{props.answer}</span>
+        </button>)
+  }
+  else{
+    toRender = (
+    <button type="button" className={cssClasses}>
         <span className="icon-team-name ">{props.name}</span>
         <span className="icon-score">score: {props.score}</span>
-      </button>
+        <span className="icon-score">round score: {props.roundScore}</span>
+      </button>)
+  }
+  return (
+      toRender
   );
 }
 

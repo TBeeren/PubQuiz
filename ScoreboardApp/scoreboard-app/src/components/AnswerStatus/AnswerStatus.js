@@ -16,7 +16,18 @@ export default function AnswerStatus() {
   const answeredTeams = useSelector((state) => state.teamsInfo.answeredTeams);
 
   teams = teams.filter((team) => {
-    return (team.name !== null && answeredTeams.includes(team.name))
+    if(team.name === null)
+    {
+      return false;
+    }
+    let forEachtTest = false
+    answeredTeams.forEach((answeredTeam) => {
+      if(answeredTeam.teamName === team.name)
+      {
+        forEachtTest = true;
+      }
+    })
+    return forEachtTest;
   })
 
   return (

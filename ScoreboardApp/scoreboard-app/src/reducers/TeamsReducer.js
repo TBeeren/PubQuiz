@@ -1,9 +1,14 @@
 const initialState = {
     teams: [{
         name: null,
+        roundScore: 0,
         score: 0
     }],
-    answeredTeams: [null]
+    answeredTeams: [{
+        teamName: null,
+        text: "",
+        isCorrect: false
+    }]
 }
 
 export default function TeamsReducer(state = initialState, action)

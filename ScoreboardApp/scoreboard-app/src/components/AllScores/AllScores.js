@@ -20,7 +20,7 @@ export default function AllScores(props)
                 <h1>Scores</h1>
                 <div id="top-other-holder">
                     {teams.map((team, index) => {
-                        return (<TeamIcon key={index} name={team.name} score={team.score} placing="top-other"/>)
+                        return (<TeamIcon key={index} name={team.name} roundScore={team.roundScore} score={team.score} placing="top-other"/>)
                     })}
                 </div>
             </div>
@@ -33,16 +33,16 @@ export default function AllScores(props)
         {
             case 0:
                 {
-                    return <TeamIcon key={index} name={team.name} score={team.score} placing="top-1"/>
+                    return (<TeamIcon key={index} name={team.name} roundScore={team.roundScore} score={team.score} placing="top-1"/>)
                 }
             case 1:
             case 2:
                 {
-                    return <TeamIcon key={index} name={team.name} score={team.score} placing="top-3"/>
+                    return (<TeamIcon key={index} name={team.name} roundScore={team.roundScore} score={team.score} placing="top-3"/>)
                 }
             default:
                 {
-                    return <TeamIcon key={index} name={team.name} score={team.score} placing="top-other"/>
+                    return (<TeamIcon key={index} name={team.name} roundScore={team.roundScore} score={team.score} placing="top-other"/>)
                 }
         }
     });

@@ -73,3 +73,8 @@
 .top-other{
   background-color: #aacc96bb;
 }
+
+.answer-false{
+  background-color: rgb(214, 90, 68, 0.3) !important;
+  border-color: rgb(228, 66, 38) !important;
+}

@@ -43,6 +43,12 @@ export function openSocket(store, history, roomId) {
           globalStore.dispatch(fetchAnsweredTeams(globalStore.getState().signInInfo.roomId, globalStore.getState().questionInfo.questionId));
           break;
         }
+      case "DISPLAY_ANSWERS":
+        {
+          history.push("/answers");
+          globalStore.dispatch(fetchAnsweredTeams(globalStore.getState().signInInfo.roomId, globalStore.getState().questionInfo.questionId));
+          break;
+        }
       default:
           {
               console.log("Unexpected message received through ws");

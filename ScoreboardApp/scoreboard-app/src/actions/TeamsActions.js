@@ -30,12 +30,9 @@ export function fetchScores(roomId)
 
 function teamAnsweredAction(teams)
 {
-    let answeredTeams = teams.map((team) => {
-        return team.teamName;
-    });
     return({
         type: "TEAM_ANSWERED",
-        payload: answeredTeams
+        payload: teams
     })
 }
 

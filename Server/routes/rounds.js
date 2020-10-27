@@ -56,7 +56,7 @@ roundRouter.post("/api/v1/games/:roomID/round", async (req, res) => {
         if (client.role === "SCOREBOARD") {
           client.send(
             JSON.stringify({
-              type: "FETCH_SCORES",
+              type: "DISPLAY_ANSWERS",
             })
           );
         }
@@ -198,7 +198,7 @@ roundRouter.put("/api/v1/games/:roomID/round", async (req, res) => {
   })
 });
 
-// Quizmaster asks for all categories for the next round and update the database with scores
+// Quizmaster asks for all categories for the next round
 roundRouter.get("/api/v1/games/:roomID/categories", async (req, res) => {
   if(req.params.roomID.length === 0 || !req.params.roomID){
     res.status(400).json('Bad Request');

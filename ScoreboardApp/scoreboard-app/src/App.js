@@ -3,6 +3,7 @@ import {Switch, Route} from 'react-router-dom';
 import SignIn from './components/Screens/SignIn/SignIn';
 import Intermission from './components/Screens/Intermission/Intermission';
 import QuestionOngoing from './components/Screens/QuestionOngoing/QuestionOngoing'
+import AnswersShowing from './components/Screens/AnswersShowing/AnswersShowing'
 import song from './song.mp3'
 
 import {useEffect} from 'react'
@@ -19,6 +20,7 @@ function App() {
     <div className="App">
     <Switch>
       <Route path="/question" render={() => <QuestionOngoing /> } />
+      <Route path="/answers" render={() => <AnswersShowing />} />
       <Route path="/intermission" render={() => <Intermission />} />
       <Route path="/" render={(routerProps) => <SignIn history={routerProps.history} audioCallback={() => {audio.play()}} />} />
     </Switch>
