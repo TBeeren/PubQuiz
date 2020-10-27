@@ -33,7 +33,6 @@ teamRouter.post("/api/v1/games/:roomID/teams", (req, res) => {
     ws.getWebSocketServer().clients.forEach((client) => {
       if(client.roomId === req.params.roomID){
         if (client.role === "MASTER") {
-          console.log("Send fetch teams to master");
           client.send(
             JSON.stringify({
               type: "FETCH_TEAMS",
@@ -67,13 +66,6 @@ teamRouter.post("/api/v1/games/:roomID/teams", (req, res) => {
 teamRouter.put(
   "/api/v1/games/:roomID/teams/:teamID/answer",
   async (req, res) => {
-    console.log("approving an answer", req.body);
-    //get room
-    //get latest question
-    //get answers
-    //get last answer from team update
-    //update correctness
-
     try {
       await Game.findOneAndUpdate(
         {
@@ -112,7 +104,6 @@ teamRouter.get("/api/v1/games/:roomID/teams/:teamName", async (req, res) => {
   console.log("Scoreboard/ quizmaster requesting teams and their scores");
   let teams = await Game.find({ roomId: req.params.roomID }, { teams: 1 });
   teams = teams[0].teams;
-  console.log("TEAMETMAMTMAETMAETMA", teams);
   let selectedTeam;
   teams.forEach((team) => {
     if(team.name === req.params.teamName)
@@ -145,11 +136,7 @@ teamRouter.delete("/api/v1/games/:roomID/teams/:teamID", (req, res) => {
   Game.update(
     { roomId: req.params.roomID },
     { $pull: { teams: { name: req.params.teamID } } }
-  )
-    .then((res) => {
-      console.log("Response: ", res);
-    })
-    .catch((e) => {
+  ).catch((e) => {
       console.log("Error: ", e.message);
     });
 });
