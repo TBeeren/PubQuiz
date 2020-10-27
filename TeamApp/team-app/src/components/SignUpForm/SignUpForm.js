@@ -15,9 +15,9 @@ export default function SignUpForm(props) {
 
   const teamNameChangeHandler = (event) => {
     try {
-      if (event.target.value.length == 0 || event.target.value.length > 8) {
+      if (event.target.value.length === 0 || event.target.value.length > 8) {
         document.getElementById("submitButton").disabled = true;
-      } else if (document.getElementById("roomIdInput").value.length == 0) {
+      } else if (document.getElementById("roomIdInput").value.length === 0) {
         document.getElementById("submitButton").disabled = true;
       } else {
         document.getElementById("submitButton").disabled = false;
@@ -30,9 +30,9 @@ export default function SignUpForm(props) {
 
   const roomIdChangeHandler = (event) => {
     try {
-      if (event.target.value.length == 0 || event.target.value.length > 8) {
+      if (event.target.value.length === 0 || event.target.value.length > 8) {
         document.getElementById("submitButton").disabled = true;
-      } else if (document.getElementById("teamNameInput").value.length == 0) {
+      } else if (document.getElementById("teamNameInput").value.length === 0) {
         document.getElementById("submitButton").disabled = true;
       } else {
         document.getElementById("submitButton").disabled = false;
