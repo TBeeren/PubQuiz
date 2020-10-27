@@ -26,14 +26,12 @@ export function openSocket(store, history ,teamName, roomId) {
     switch (data.type) {
         case "NEXT_QUESTION":
             {
-                console.log("NEXT_QUESTION", data.questionId);
                 store.dispatch(fetchNewQuestion(store.getState().signUpInfo.roomId, data.questionId));
                 history.push("/question");
                 break;
             }
         case "VALIDATE_ANSWER":
             {
-                console.log("VALIDATE_ANSWER", data.questionId);
                 store.dispatch(validateAnswer(store.getState().signUpInfo.roomId, 
                                                 store.getState().questionInfo.questionId, 
                                                 store.getState().signUpInfo.teamName));
@@ -41,7 +39,6 @@ export function openSocket(store, history ,teamName, roomId) {
             }
         case "FETCH_SCORES":
           {
-              console.log("FETCH_SCORES", data.questionId);
               store.dispatch(fetchScores(store.getState().signUpInfo.roomId,
                                           store.getState().signUpInfo.teamName));
               break;

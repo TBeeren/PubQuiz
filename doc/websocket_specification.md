@@ -65,20 +65,6 @@
     type: "FETCH_TEAMS"
 }
 ```
-- FETCH_CATEGORIES
-  - Notify to fetch new categories to select from for the upcoming round.
-```
-{
-    type: "FETCH_CATEGORIES"
-}
-```
-- FETCH_QUESTIONS
-  - Notify to fetch new questions for the next round.
-```
-{
-    type: "FETCH_QUESTIONS"
-}
-```
 - FETCH_SCORES
   - Notify to fetch the scores.
 ```

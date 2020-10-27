@@ -29,7 +29,6 @@ export function openSocket(store, history, roomId) {
           }
       case "NEXT_QUESTION":
         {
-          console.log(data);
           globalStore.dispatch(fetchNewQuestion(globalStore.getState().signInInfo.roomId, data.questionId));
           globalStore.dispatch(fetchRoundNumber(globalStore.getState().signInInfo.roomId));
           history.push("/question");

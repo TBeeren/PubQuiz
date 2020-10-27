@@ -8,7 +8,6 @@ const initialState = {
 };
 
 export default function TeamsReducer(state = initialState, action) {
-    console.log("Hallo in de reducer: ", action.payload, action.type);
   switch (action.type) {
     case "FETCH_TEAMS": {
       return {

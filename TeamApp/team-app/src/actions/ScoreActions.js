@@ -31,7 +31,6 @@ export function fetchScores(roomId, teamName)
         {
             let response = await fetch(`${applicationHost}/api/v1/games/${roomId}/teams/${teamName}`);
             response = await response.json();
-            console.log("ff wat erbij zetten", response);
             dispatch(updateScoreAction(response.score));
             dispatch(updateRoundScoreAction(response.roundScore));
         }

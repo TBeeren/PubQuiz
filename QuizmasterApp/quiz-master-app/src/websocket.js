@@ -20,25 +20,14 @@ export function openSocket(store) {
 
     switch (data.type) {
       case "FETCH_ANSWERS": {
-        console.log("FETCH_ANSWERS");
         globalStore.dispatch(fetchTeamAnswers(globalStore.getState().quizInfo.roomId, globalStore.getState().question.questionNumber));
         break;
       }
       case "FETCH_TEAMS": {
-        console.log("FETCH_TEAMS");
         globalStore.dispatch(fetchTeam(globalStore.getState().quizInfo.roomId));
         break;
       }
-      case "FETCH_CATEGORIES": {
-        console.log("FETCH_CATEGORIES");
-        break;
-      }
-      case "FETCH_QUESTIONS": {
-        console.log("FETCH_QUESTIONS");
-        break;
-      }
       case "FETCH_SCORES": {
-        console.log("Fetch scores jongeuhsdf");
         globalStore.dispatch(fetchScores(globalStore.getState().quizInfo.roomId));
         break;
       }

@@ -21,7 +21,6 @@ export function fetchNewQuestion(roomId, questionId)
         {
             let response = await fetch(`${applicationHost}/api/v1/games/${roomId}/questions/${questionId}`);
             response = await response.json();
-            console.log("Res: ",response);
             dispatch(NewQuestionAction(response.question, questionId, response.category, response.questionNumber));
         }
         catch(error)

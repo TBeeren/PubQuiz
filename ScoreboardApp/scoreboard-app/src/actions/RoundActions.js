@@ -16,7 +16,6 @@ export function fetchRoundNumber(roomId)
         {
             let response = await fetch(`${applicationHost}/api/v1/games/${roomId}/round`);
             response = await response.json();
-            console.log("Res: ",response);
             dispatch(fetchRoundAction(response.roundNumber));
         }
         catch(error)

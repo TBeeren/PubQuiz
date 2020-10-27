@@ -32,9 +32,7 @@ function SingleSelectionList(props) {
           document.getElementById(i).classList.remove("selected");
         }
       } catch (e) {
-        console.log(
-          "Warning! The application requires 5 selections in the list"
-        );
+        //Not handling, only served warnings.
       }
     }
   });

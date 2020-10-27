@@ -21,7 +21,6 @@ export default function QuestionInfoReducer(state = initialState, action)
             }
         case "NEW_QUESTION":
             {
-                console.log("questionId: ", state.questionId);
                 return{
                     ...state,
                     question: action.payload.question,
@@ -33,7 +32,6 @@ export default function QuestionInfoReducer(state = initialState, action)
             }
         case "ANSWER_SUBMITTED":
             {
-                console.log("Answer submitteded Action redcuers");
                 return{
                     ...state,
                     teamAnswer: action.payload.answer,
