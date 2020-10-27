@@ -31,6 +31,7 @@ function ChooseQuestion() {
   }
 
   useEffect(() => {
+    document.getElementById('NavButtons').style.display = "none";
     if(roundNumber)
     {
       dispatch(fetchQuestions(roomId, roundNumber));

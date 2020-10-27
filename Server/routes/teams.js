@@ -13,6 +13,15 @@ const Game = mongoose.model("Game");
 teamRouter.post("/api/v1/games/:roomID/teams", async (req, res) => {
   console.log("TeamApp signing up with room id", req.body);
 
+  if(req.params.roomID.length === 0 || 
+    req.body.name.length === 0 || 
+    req.body.name.length > 8 || 
+    !req.params.roomID ||
+    !req.body.name){
+    res.status(400).json('Bad Request');
+  }
+
+
   let teams = await Game.findOne({roomId: req.params.roomID}, {teams: 1});
   teams = teams.teams;
   console.log(teams);

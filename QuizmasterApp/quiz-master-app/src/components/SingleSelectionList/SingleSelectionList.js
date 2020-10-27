@@ -48,6 +48,14 @@ function SingleSelectionList(props) {
         tempArray.push(false);
       }
     }
+    try {
+      if(!tempArray.length){
+        document.getElementById('NavButtons').style.display = "none";
+      } else {
+        document.getElementById('NavButtons').style.display = "inline";
+      }
+    } catch(e){
+  }
     setButtons(tempArray);
     dispatch(addQuestionAction(questionArray[0]));
   }

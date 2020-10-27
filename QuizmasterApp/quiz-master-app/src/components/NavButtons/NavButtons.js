@@ -25,6 +25,7 @@ function NavButtons(props) {
           <NavButton></NavButton>
         </div>
         <div
+          id="NavButtons"
           className="float-right align-bottom-right"
           onClick={() => setModalShow(true)}
         >
@@ -35,6 +36,7 @@ function NavButtons(props) {
   } else {
     buttonsHtml = (
       <div
+        id="NavButtons"
         className="float-right align-bottom-right"
         onClick={() => setModalShow(true)}
       >
@@ -65,7 +67,7 @@ function NavButtons(props) {
   }
 
   return (
-    <div className="div-content ">
+    <div className="div-content">
       {modalHtml}
       {buttonsHtml}
     </div>
