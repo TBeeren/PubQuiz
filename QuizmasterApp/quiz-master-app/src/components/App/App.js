@@ -8,6 +8,8 @@ import ApproveTeams from "../Screens/ApproveTeams/ApproveTeams";
 import ChooseCategory from "../Screens/ChooseCategory/ChooseCategory"
 import Question from "../Screens/Question/Question"
 import ChooseQuestion from "../Screens/ChooseQuestion/ChooseQuestion"
+import FinalizeScreen from "../Screens/FinalizeScreen/FinalizeScreen"
+import VictoryScreen from "../Screens/VictoryScreen/VictoryScreen"
 
 // Artifacts
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -21,6 +23,8 @@ function App() {
         <Route exact path="/select-categories" component={ChooseCategory}/>
         <Route exact path="/select-question" component={ChooseQuestion}/>
         <Route exact path="/question/:questionNumber" component={Question}/>
+        <Route exact path="/finalize" component={FinalizeScreen}/>
+        <Route exact path="/victory" component={VictoryScreen}/>
         <Route path="/" component={Create}/>
       </Switch>
     </Router>

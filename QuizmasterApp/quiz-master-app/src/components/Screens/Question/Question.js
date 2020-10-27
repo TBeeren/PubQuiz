@@ -23,7 +23,7 @@ function Question() {
   if(questionCounter !== 12){
     path = "/select-question";
   } else  {
-    path = "/select-categories";
+    path = "/finalize";
   }
 
   const onProgress = () => {

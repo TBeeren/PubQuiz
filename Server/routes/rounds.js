@@ -91,7 +91,6 @@ roundRouter.post("/api/v1/games/:roomID/round", async (req, res) => {
       });
     }
   } catch (error) {
-    console.log("Dikke error op je smoel x : ",error.message);
     res.status(400).json({ message: error.message });
   }
 });
@@ -120,6 +119,7 @@ roundRouter.post("/api/v1/games/:roomID/round/categories", (req, res) => {
     });
 });
 
+// Fetching the roundnumber
 roundRouter.get("/api/v1/games/:roomID/round", async (req, res) => {
   let rounds = await Game.find({ roomId: req.params.roomID }, {rounds: 1});
   rounds = rounds[0].rounds;
@@ -171,7 +171,6 @@ roundRouter.get("/api/v1/games/:roomID/categories", async (req, res) => {
           }
       }
       
-      console.log("points for team: ", teams[i].name, "kijk dat is slim: ", points);
       await Game.findOneAndUpdate(
         { roomId: req.params.roomID },
         {

@@ -1,0 +1,27 @@
+#all-score{
+    height: 70vh;
+    display: flex;
+    flex-direction: row;
+}
+
+#top-1-holder{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+#top-3-holder{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+#top-other-holder{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
