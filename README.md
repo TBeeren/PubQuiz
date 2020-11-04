@@ -8,7 +8,6 @@ The Quizzer is a web application that can be used in bars, sports canteens and m
 
 The following libraries are used by and included in the extension as-is:
 
-- jQuery: [http://jquery.com/](http://jquery.com/)
 - React: [https://reactjs.org/](https://reactjs.org/)
 - Webpack: [https://webpack.js.org/](https://webpack.js.org/)
 - Bootstrap from Twitter: [http://twitter.github.com/bootstrap/](http://twitter.github.com/bootstrap/)
